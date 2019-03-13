@@ -2,7 +2,6 @@ let express = require('express');
 let router = express.Router();
 let multipart = require('connect-multiparty');
 let multipartMiddleware = multipart();
-const db = require('../connection/connection');
 const skillService = require("../service/skill");
 
 /* GET users listing. */

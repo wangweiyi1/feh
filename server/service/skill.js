@@ -1,4 +1,3 @@
-const skillDao = require("../dao/skill");
 const skillEntity = require('../entity/skill');
 const util = require('../util/util');
 
