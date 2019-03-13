@@ -75,7 +75,7 @@
 
         <el-form-item>
           <el-button type="primary" size="small" @click="submitSkill">提交</el-button>
-          <el-button size="small">取消</el-button>
+          <el-button size="small" @click="$router.push({path: '/skill/list'})">取消</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -186,8 +186,6 @@
         querySkillById(para).then(res => {
           this.loading = false;
           let data = res.data.data;
-          data.build = (data.build.data[0] == 1) ? true : false;
-          data.exclusive = (data.exclusive.data[0] == 1) ? true : false;
           data.select_move = data.select_move.split(",");
           data.select_weapon = data.select_weapon.split(",");
           this.form = data;

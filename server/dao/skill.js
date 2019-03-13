@@ -1,7 +1,7 @@
 const skill = require('../entity/skill');
 
-module.exports.findAll = () => {
-  return skill.skill.findAll();
+module.exports.findAll = (params) => {
+  return skill.skill.findAll(params);
 };
 
 module.exports.getSkillListLimit = (params) => {

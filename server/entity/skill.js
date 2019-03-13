@@ -10,7 +10,7 @@ const Skill = db.define('skill', {
   name: {type: Sequelize.STRING,},
   position: {type: Sequelize.STRING},
   description: {type: Sequelize.BOOLEAN},
-  exclusive: {type: Sequelize.STRING},
+  exclusive: {type: Sequelize.BOOLEAN},
   sp: {type: Sequelize.INTEGER},
   level: {type: Sequelize.STRING},
   build: {type: Sequelize.BOOLEAN},
@@ -23,8 +23,8 @@ const Skill = db.define('skill', {
   def: {type: Sequelize.INTEGER},
   res: {type: Sequelize.INTEGER},
   attribute: {type: Sequelize.INTEGER},
-  creation: {type: Sequelize.DATE},
-  lase_modified: {type: Sequelize.DATE},
+  creation: {type: Sequelize.STRING},
+  lase_modified: {type: Sequelize.STRING},
 }, {
   // 如果为 true 则表的名称和 model 相同，即 user
   // 为 false MySQL创建的表名称会是复数 users
