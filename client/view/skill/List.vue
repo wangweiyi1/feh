@@ -32,7 +32,7 @@
 </template>
 
 <script>
-  import {getSkillList,deleteSkill} from '@/api/api'
+  import {getSkillList,deleteSkill,queryAll} from '@/api/api'
   export default {
     data() {
       return {
@@ -83,10 +83,11 @@
         para.append("pageSize",this.table.pageSize);
         this.loading.table = true;
         getSkillList(para).then(res => {
+          console.log(res);
           this.loading.table = false;
           if(res.data.status){
             this.table.total = res.data.data.count;
-            this.skillList = res.data.data.table;
+            this.skillList = res.data.data.rows;
           }
         })
       }
