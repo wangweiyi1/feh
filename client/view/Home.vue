@@ -8,6 +8,10 @@
         </div>
         <el-menu :default-active="menuActive" router background-color="#545c64"
                  text-color="#fff" active-text-color="#ffd04b">
+          <el-menu-item index="/hero/list">
+            <i class="el-icon-tickets"></i>
+            <span slot="title">英雄列表</span>
+          </el-menu-item>
           <el-menu-item index="/weapon/list">
             <i class="el-icon-tickets"></i>
             <span slot="title">武器列表</span>

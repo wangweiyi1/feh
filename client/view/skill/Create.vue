@@ -96,7 +96,7 @@
         moveList: data.moveList,
         form: {
           name: "",
-          position: "a",
+          position: "b",
           description: "",
           exclusive: false,
           sp: "",

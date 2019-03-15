@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/view/Home'
+import HeroList from '@/view/hero/List'
+import HeroCreate from '@/view/hero/Create'
 import SkillList from '@/view/skill/List'
 import SkillCreate from '@/view/skill/Create'
 import WeaponList from '@/view/weapon/List'
@@ -40,6 +42,17 @@ export default new Router({
           path: '/weapon/create',
           name: 'weaponCreate',
           component: WeaponCreate,
+        },
+
+        {
+          path: '/hero/list',
+          name: 'heroList',
+          component: HeroList,
+        },
+        {
+          path: '/hero/create',
+          name: 'heroCreate',
+          component: HeroCreate,
         },
       ]
     }

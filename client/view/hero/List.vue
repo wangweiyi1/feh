@@ -102,10 +102,10 @@
         });
       },
       updateSkill(id) {
-        this.$router.push({path: '/skill/create', query: {id: id}});
+        this.$router.push({path: '/hero/create', query: {id: id}});
       },
       linkCreateSkill() {
-        this.$router.push({path: '/skill/create'});
+        this.$router.push({path: '/hero/create'});
       },
       updateCondition() {
         this.table.currentPage = 1;

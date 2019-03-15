@@ -2,7 +2,20 @@ const skillEntity = require('../entity/skill');
 const util = require('../util/util');
 
 module.exports.getSkillListLimit = (params,cb) => {
+  let where = {};
+  if(params.text != ""){
+    where.name = {
+      $like:"%" + params.text + "%"
+    }
+  }
+  if(params.position != ""){
+    where.position = params.position
+  }
+  if(params.level == "true"){
+    where.level = {$gte:3};
+  }
   return skillEntity.skill.findAndCount({
+    where:where,
     order: [
       ['id', 'DESC'],
     ],
