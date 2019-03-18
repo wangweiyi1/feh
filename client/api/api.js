@@ -2,8 +2,8 @@ import axios from 'axios';
 
 let base = '';
 
-// base = 'http://127.0.0.1:8081';
-base = 'http://39.98.79.79:8081';
+// base = 'http://127.0.0.1:80';
+base = 'http://39.98.79.79:80';
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 

@@ -39,6 +39,6 @@ process.on('uncaughtException', function (err) {
 });
 
 // 监听
-app.listen(8081, function () {
+app.listen(80, function () {
   console.log('success listen...8081');
 });
