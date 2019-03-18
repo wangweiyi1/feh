@@ -25,7 +25,7 @@
   margin-bottom:10px;
 }
 .el-radio.is-bordered+.el-radio.is-bordered{
-  margin-left:0;
+  margin-left:0 !important;
 }
 
 

@@ -10,7 +10,11 @@ module.exports.getSkillListLimit = (params,cb) => {
     }
   }
   if(params.position && params.position != ""){
-    where.position = params.position
+    if(params.position == "seal"){
+      where.build = true;
+    }else{
+      where.position = params.position
+    }
   }
   if(params.level == "true"){
     where.level = {$gte:3};

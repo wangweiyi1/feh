@@ -120,7 +120,6 @@
         para.append("text", this.condition.text);
         this.loading.table = true;
         getSkillList(para).then(res => {
-          console.log(res);
           this.loading.table = false;
           if (res.data.status) {
             this.table.total = res.data.data.count;

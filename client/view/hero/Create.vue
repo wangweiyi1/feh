@@ -161,7 +161,6 @@
         let para = new FormData();
         para.append("level", "true");
         getSkillList(para).then(res => {
-          console.log(res);
           this.skillList = res.data.data;
         })
       }
