@@ -2,30 +2,38 @@ const skillEntity = require('../entity/skill');
 const util = require('../util/util');
 
 module.exports.getSkillListLimit = (params,cb) => {
+  let condition = {};
   let where = {};
-  if(params.text != ""){
+  if(params.text && params.text != ""){
     where.name = {
       $like:"%" + params.text + "%"
     }
   }
-  if(params.position != ""){
+  if(params.position && params.position != ""){
     where.position = params.position
   }
   if(params.level == "true"){
     where.level = {$gte:3};
   }
-  return skillEntity.skill.findAndCount({
-    where:where,
-    order: [
-      ['id', 'DESC'],
-    ],
-    limit:Number(params.pageSize),
-    offset:(params.currentPage - 1) * params.pageSize
-  }).then((results)=>{
-    cb(results);
-  }).catch((error)=>{
-    cb([],"查询失败");
-  });
+  condition.order = [
+    ['id', 'DESC'],
+  ];
+  condition.where = where;
+  if(params.pageSize && params.currentPage){
+    condition.limit = Number(params.pageSize);
+    condition.offset = (params.currentPage - 1) * params.pageSize;
+    return skillEntity.skill.findAndCount(condition).then((results)=>{
+      cb(results);
+    }).catch((error)=>{
+      cb([],"查询失败");
+    });
+  }else{
+    return skillEntity.skill.findAll(condition).then((results)=>{
+      cb(results);
+    }).catch((error)=>{
+      cb([],"查询失败");
+    });
+  }
 };
 
 module.exports.querySkillById = (id,cb) => {

@@ -14,12 +14,6 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="是否是真五">
-          <el-radio-group v-model="form.top">
-            <el-radio :label="true" name="position">是</el-radio>
-            <el-radio :label="false" name="position">否</el-radio>
-          </el-radio-group>
-        </el-form-item>
         <el-form-item label="是否是大英雄或者涡战英雄">
           <el-radio-group v-model="form.special_hero">
             <el-radio :label="true" name="position">是</el-radio>
@@ -40,17 +34,37 @@
             </template>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="影响属性">
-          HP:
-          <el-input-number v-model="form.hp" name="hp" class="input-shot"></el-input-number>
-          ATK:
-          <el-input-number v-model="form.atk" name="atk" class="input-shot"></el-input-number>
-          SPD:
-          <el-input-number v-model="form.spd" name="spd" class="input-shot"></el-input-number>
-          DEF:
-          <el-input-number v-model="form.def" name="def" class="input-shot"></el-input-number>
-          RES:
-          <el-input-number v-model="form.res" name="res" class="input-shot"></el-input-number>
+        <el-form-item label="是否是真五">
+          <el-radio-group v-model="form.top">
+            <el-radio :label="true" name="position">是</el-radio>
+            <el-radio :label="false" name="position">否</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="">
+          <el-checkbox-group v-model="levels" size="small" v-if="!form.top">
+            <el-checkbox label="4" border>四星</el-checkbox>
+            <el-checkbox label="3" border>三星</el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
+        <el-form-item label="">
+          <el-tabs v-model="activeName">
+            <el-tab-pane label="五星" name="first">
+              HP:
+              <el-input v-model="form.hp" name="hp" class="input-shot"></el-input>
+              ATK:
+              <el-input v-model="form.atk" name="atk" class="input-shot"></el-input>
+              SPD:
+              <el-input v-model="form.spd" name="spd" class="input-shot"></el-input>
+              DEF:
+              <el-input v-model="form.def" name="def" class="input-shot"></el-input>
+              RES:
+              <el-input v-model="form.res" name="res" class="input-shot"></el-input>
+            </el-tab-pane>
+            <el-tab-pane label="四星" name="second" v-if="levels.indexOf('4') != -1">配置管理</el-tab-pane>
+            <el-tab-pane label="三星" name="third" v-if="levels.indexOf('3') != -1">角色管理</el-tab-pane>
+
+
+          </el-tabs>
         </el-form-item>
 
         <el-form-item>
@@ -64,7 +78,7 @@
 
 <script>
   import data from '@/data/data';
-  import {createSkill, querySkillById, updateSkill} from '@/api/api'
+  import {createSkill, querySkillById, updateSkill, getSkillList} from '@/api/api'
 
   export default {
     data() {
@@ -75,6 +89,9 @@
         weaponList: data.weaponList,
         moveList: data.moveList,
         worksList: [],
+        skillList:[],
+        levels:["4","3"],
+        activeName:"first",
         form: {
           name: "",
           description: "",
@@ -139,6 +156,14 @@
           data.select_weapon = data.select_weapon.split(",");
           this.form = data;
         })
+      },
+      querySkillList(){
+        let para = new FormData();
+        para.append("level", "true");
+        getSkillList(para).then(res => {
+          console.log(res);
+          this.skillList = res.data.data;
+        })
       }
     },
     mounted() {
@@ -147,6 +172,7 @@
         this.update = true;
         this.querySkill();
       }
+      this.querySkillList();
     }
   }
 </script>
