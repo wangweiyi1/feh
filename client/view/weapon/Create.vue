@@ -128,8 +128,6 @@
         queryWeaponById(para).then(res=>{
           this.loading = false;
           let data = res.data.data;
-          data.build = (data.build.data[0] == 1) ? true : false;
-          data.exclusive = (data.exclusive.data[0] == 1) ? true : false;
           if(data.build_id == null){
             data.build_id = "";
           }

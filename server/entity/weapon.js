@@ -2,28 +2,24 @@ const Sequelize = require('sequelize');
 const db = require('../connection/db');
 
 
-const Skill = db.define('skill', {
+const Weapon = db.define('weapon', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey:true,
     autoIncrement: true
   },
   name: {type: Sequelize.STRING,},
-  position: {type: Sequelize.STRING},
   description: {type: Sequelize.BOOLEAN},
   exclusive: {type: Sequelize.BOOLEAN},
   sp: {type: Sequelize.INTEGER},
-  level: {type: Sequelize.STRING},
+  type: {type: Sequelize.STRING},
   build: {type: Sequelize.BOOLEAN},
-  cd: {type: Sequelize.STRING},
-  select_weapon: {type: Sequelize.STRING},
-  select_move: {type: Sequelize.STRING},
+  build_id: {type: Sequelize.INTEGER},
   hp: {type: Sequelize.INTEGER},
   atk: {type: Sequelize.INTEGER},
   spd: {type: Sequelize.INTEGER},
   def: {type: Sequelize.INTEGER},
   res: {type: Sequelize.INTEGER},
-  attribute: {type: Sequelize.INTEGER},
   creation: {type: Sequelize.STRING},
   lase_modified: {type: Sequelize.STRING},
 }, {
@@ -34,4 +30,4 @@ const Skill = db.define('skill', {
   timestamps: false,
 });
 
-module.exports.skill = Skill;
+module.exports.weapon = Weapon;

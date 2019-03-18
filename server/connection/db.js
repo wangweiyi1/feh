@@ -1,6 +1,10 @@
 const Sequelize = require('sequelize');
 
-module.exports = new Sequelize('feh-data', 'feh', 'henhaojI123.', {
+const database = "feh-data";
+const username = "feh";
+const password = "henhaojI123.";
+
+module.exports = new Sequelize(database, username, password, {
   host: '39.98.79.79', // 数据库地址
   dialect: 'mysql', // 指定连接的数据库类型
   pool: {

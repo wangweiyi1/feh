@@ -83,10 +83,11 @@
         para.append("pageSize",this.table.pageSize);
         this.loading.table = true;
         getWeaponList(para).then(res => {
+          console.log(res.data.data);
           this.loading.table = false;
           if(res.data.status){
             this.table.total = res.data.data.count;
-            this.weaponList = res.data.data.table;
+            this.weaponList = res.data.data.rows;
           }
         })
       }
