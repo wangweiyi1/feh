@@ -20,6 +20,10 @@
             <i class="el-icon-tickets"></i>
             <span slot="title">技能列表</span>
           </el-menu-item>
+          <el-menu-item index="/card">
+            <i class="el-icon-tickets"></i>
+            <span slot="title">模拟抽卡</span>
+          </el-menu-item>
         </el-menu>
       </el-aside>
 
