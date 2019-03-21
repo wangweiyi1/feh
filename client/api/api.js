@@ -19,3 +19,9 @@ export const getWeaponList = params => axios.post(`${base}/weapon/getWeaponList`
 export const deleteWeapon = params => axios.post(`${base}/weapon/deleteWeapon`, params);
 export const queryWeaponById = params => axios.post(`${base}/weapon/queryWeaponById`, params);
 export const queryBaseWeapon = params => axios.post(`${base}/weapon/queryBaseWeapon`, params);
+
+export const uploadPortrait = params => axios.post(`${base}/hero/uploadPortrait`, params);
+export const createHero = params => axios.post(`${base}/hero/createHero`, params);
+export const deleteHeroById = params => axios.post(`${base}/hero/deleteHeroById`, params);
+
+export const queryAllProduction = params => axios.post(`${base}/common/queryAllProduction`, params);

@@ -1,7 +1,17 @@
 <template>
-  <div>
+  <div class="hero-create-container">
     <el-card v-loading="loading">
       <el-form ref="form" :model="form" label-width="200px">
+        <el-form-item label="头像">
+          <el-upload
+            class="avatar-uploader"
+            action="http://127.0.0.1:80/hero/uploadPortrait"
+            :show-file-list="false" name="file" :data="fileData"
+            :on-success="handleAvatarSuccess">
+            <img v-if="imageUrl" :src="imageUrl" name="portrait" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+        </el-form-item>
         <el-form-item label="英雄名称">
           <el-input v-model="form.name" name="name"></el-input>
         </el-form-item>
@@ -9,10 +19,16 @@
           <el-input type="textarea" name="description" style="width:400px;" v-model="form.description"></el-input>
         </el-form-item>
         <el-form-item label="登场作品">
-          <el-select v-model="form.from" placeholder="请选择" name="from">
-            <el-option v-for="item in worksList" :key="item.key" :label="item.value" :value="item.key">
+          <el-select v-model="form.production" placeholder="请选择" name="from">
+            <el-option v-for="item in productionList" :key="item.id" :label="item.name" :value="item.id">
             </el-option>
           </el-select>
+        </el-form-item>
+        <el-form-item label="是否是限定英雄">
+          <el-radio-group v-model="form.limit">
+            <el-radio :label="true" name="limit">是</el-radio>
+            <el-radio :label="false" name="limit">否</el-radio>
+          </el-radio-group>
         </el-form-item>
         <el-form-item label="是否是大英雄或者涡战英雄">
           <el-radio-group v-model="form.special_hero">
@@ -40,25 +56,97 @@
             <el-radio :label="false" name="position">否</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="">
-          <el-checkbox-group v-model="levels" size="small" v-if="!form.top">
-            <el-checkbox label="4" border>四星</el-checkbox>
-            <el-checkbox label="3" border>三星</el-checkbox>
+        <el-form-item label="优势性格">
+          <el-checkbox-group v-model="form.good_character" size="small">
+            <template v-for="item in characterList">
+              <el-checkbox :label="item.key" name="select_weapon" border>{{item.value}}</el-checkbox>
+            </template>
+          </el-checkbox-group>
+        </el-form-item>
+        <el-form-item label="劣势性格">
+          <el-checkbox-group v-model="form.bad_character" size="small">
+            <template v-for="item in characterList">
+              <el-checkbox :label="item.key" name="select_weapon" border>{{item.value}}</el-checkbox>
+            </template>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item label="">
           <el-tabs v-model="activeName">
             <el-tab-pane label="五星" name="first">
-              HP:
-              <el-input v-model="form.hp" name="hp" class="input-shot"></el-input>
-              ATK:
-              <el-input v-model="form.atk" name="atk" class="input-shot"></el-input>
-              SPD:
-              <el-input v-model="form.spd" name="spd" class="input-shot"></el-input>
-              DEF:
-              <el-input v-model="form.def" name="def" class="input-shot"></el-input>
-              RES:
-              <el-input v-model="form.res" name="res" class="input-shot"></el-input>
+              <el-row class="form-custom">
+                <el-col :span="2" class="title">1级属性</el-col>
+                <el-col :span="22">
+                  HP:
+                  <el-input v-model="form.levelFive.level1_hp" name="levelFive.level1_hp" class="input-shot"></el-input>
+                  ATK:
+                  <el-input v-model="form.levelFive.level1_atk" name="levelFive.level1_atk"
+                            class="input-shot"></el-input>
+                  SPD:
+                  <el-input v-model="form.levelFive.level1_spd" name="levelFive.level1_spd"
+                            class="input-shot"></el-input>
+                  DEF:
+                  <el-input v-model="form.levelFive.level1_def" name="levelFive.level1_def"
+                            class="input-shot"></el-input>
+                  RES:
+                  <el-input v-model="form.levelFive.level1_res" name="levelFive.level1_res"
+                            class="input-shot"></el-input>
+                </el-col>
+
+                <el-col :span="2" class="title">40级属性</el-col>
+                <el-col :span="22">
+                  HP:
+                  <el-input v-model="form.levelFive.level40_hp" name="levelFive.level40_hp"
+                            class="input-shot"></el-input>
+                  ATK:
+                  <el-input v-model="form.levelFive.level40_atk" name="levelFive.level40_atk"
+                            class="input-shot"></el-input>
+                  SPD:
+                  <el-input v-model="form.levelFive.level40_spd" name="levelFive.level40_spd"
+                            class="input-shot"></el-input>
+                  DEF:
+                  <el-input v-model="form.levelFive.level40_def" name="levelFive.level40_def"
+                            class="input-shot"></el-input>
+                  RES:
+                  <el-input v-model="form.levelFive.level40_res" name="levelFive.level40_res"
+                            class="input-shot"></el-input>
+                </el-col>
+
+                <el-col :span="2" class="title">武器</el-col>
+                <el-col :span="22">
+                  <el-select v-model="form.levelFive.weapon" placeholder="请选择">
+                  </el-select>
+                </el-col>
+
+                <el-col :span="2" class="title">辅助技能</el-col>
+                <el-col :span="22">
+                  <el-select v-model="form.levelFive.sup" placeholder="请选择">
+                  </el-select>
+                </el-col>
+
+                <el-col :span="2" class="title">奥义</el-col>
+                <el-col :span="22">
+                  <el-select v-model="form.levelFive.kill" placeholder="请选择">
+                  </el-select>
+                </el-col>
+
+                <el-col :span="2" class="title">A</el-col>
+                <el-col :span="22">
+                  <el-select v-model="form.levelFive.a" placeholder="请选择">
+                  </el-select>
+                </el-col>
+
+                <el-col :span="2" class="title">B</el-col>
+                <el-col :span="22">
+                  <el-select v-model="form.levelFive.b" placeholder="请选择">
+                  </el-select>
+                </el-col>
+
+                <el-col :span="2" class="title">C</el-col>
+                <el-col :span="22">
+                  <el-select v-model="form.levelFive.c" placeholder="请选择">
+                  </el-select>
+                </el-col>
+              </el-row>
             </el-tab-pane>
             <el-tab-pane label="四星" name="second" v-if="levels.indexOf('4') != -1">配置管理</el-tab-pane>
             <el-tab-pane label="三星" name="third" v-if="levels.indexOf('3') != -1">角色管理</el-tab-pane>
@@ -68,8 +156,8 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" size="small" @click="submitSkill">提交</el-button>
-          <el-button size="small" @click="$router.push({path: '/skill/list'})">取消</el-button>
+          <el-button type="primary" size="small" @click="submit">提交</el-button>
+          <el-button size="small" @click="$router.push({path: '/hero/list'})">取消</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -78,67 +166,153 @@
 
 <script>
   import data from '@/data/data';
-  import {createSkill, querySkillById, updateSkill, getSkillList} from '@/api/api'
+  import {
+    querySkillById,
+    updateSkill,
+    getSkillList,
+    uploadPortrait,
+    queryAllProduction,
+    createHero,
+    deleteHeroById
+  } from '@/api/api'
 
   export default {
     data() {
       return {
         id: 0,
+        imageUrl: "",
+        value: "",
+        fileData: {
+          id: 0
+        },
         update: false,
+        updated: false,
         loading: false,
         weaponList: data.weaponList,
         moveList: data.moveList,
-        worksList: [],
-        skillList:[],
-        levels:["4","3"],
-        activeName:"first",
+        productionList: [],
+        skillList: [],
+        characterList: [
+          {key: "hp", value: "HP"},
+          {key: "atk", value: "攻击"},
+          {key: "spd", value: "速度"},
+          {key: "def", value: "防守"},
+          {key: "res", value: "魔抗"},
+        ],
+        levels: ["4", "3"],
+        activeName: "first",
         form: {
           name: "",
           description: "",
-          top:false,
-          special_hero:false,
-          from: "",
+          limit: false,
+          top: false,
+          special_hero: false,
+          production: "",
           select_weapon: "sword",
           select_move: "walk",
-          levelFive:{
-            hp: 0,
-            atk: 0,
-            spd: 0,
-            def: 0,
-            res: 0,
+          good_character: [],
+          bad_character: [],
+          levelFive: {
+            level1_hp: 0,
+            level1_atk: 0,
+            level1_spd: 0,
+            level1_def: 0,
+            level1_res: 0,
+            level40_hp: 0,
+            level40_atk: 0,
+            level40_spd: 0,
+            level40_def: 0,
+            level40_res: 0,
+            weapon: "",
+            sup: "",
+            kill: "",
+            a: "",
+            b: "",
+            c: "",
+          },
+          levelFour: {
+            level1_hp: 0,
+            level1_atk: 0,
+            level1_spd: 0,
+            level1_def: 0,
+            level1_res: 0,
+            level40_hp: 0,
+            level40_atk: 0,
+            level40_spd: 0,
+            level40_def: 0,
+            level40_res: 0,
+            weapon: "",
+            sup: "",
+            kill: "",
+            a: "",
+            b: "",
+            c: "",
+          },
+          levelThree: {
+            level1_hp: 0,
+            level1_atk: 0,
+            level1_spd: 0,
+            level1_def: 0,
+            level1_res: 0,
+            level40_hp: 0,
+            level40_atk: 0,
+            level40_spd: 0,
+            level40_def: 0,
+            level40_res: 0,
+            weapon: "",
+            sup: "",
+            kill: "",
+            a: "",
+            b: "",
+            c: "",
           },
         },
       }
     },
     methods: {
-      submitSkill() {
-        if (this.update) {
-          this.updateSkill();
-        } else {
-          this.createSkill();
-        }
+      uploadPortrait(file) {
+        let para = new FormData()
+        para.append('file', file)
+        console.log(para);
+        uploadPortrait(para).then(res => {
+          console.log(res);
+        });
       },
-      createSkill() {
-        let para = new FormData(this.$refs.form.$el);
+      handleAvatarSuccess(res, file) {
+        this.imageUrl = URL.createObjectURL(file.raw);
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
+      },
+      submit() {
+        this.updateHero();
+      },
+      createHero() {
         this.loading = true;
-        createSkill(para).then(res => {
+        createHero().then(res => {
           this.loading = false;
-          if (res.data.status) {
-            this.$message.success(res.data.msg);
-            // this.$router.push({path: '/skill/list'});
-          } else {
-            this.$message.error(res.data.msg);
-          }
+          let data = res.data.data;
+          this.id = data.id;
+          this.fileData.id = data.id;
         })
       },
-      updateSkill() {
+      updateHero() {
         let para = new FormData(this.$refs.form.$el);
         para.append("id", this.id);
         this.loading = true;
         updateSkill(para).then(res => {
           this.loading = false;
           if (res.data.status) {
-            this.$router.push({path: '/skill/list'});
+            this.$router.push({path: '/hero/list'});
             this.$message.success(res.data.msg);
           } else {
             this.$message.error(res.data.msg);
@@ -157,7 +331,16 @@
           this.form = data;
         })
       },
-      querySkillList(){
+      init() {
+        this.querySkillList();
+        this.queryAllProduction();
+      },
+      queryAllProduction() {
+        queryAllProduction().then(res => {
+          this.productionList = res.data.data;
+        })
+      },
+      querySkillList() {
         let para = new FormData();
         para.append("level", "true");
         getSkillList(para).then(res => {
@@ -165,17 +348,36 @@
         })
       }
     },
+    beforeDestroy(){
+      if(!this.updated){
+        let para = new FormData();
+        para.append("id",this.id);
+        deleteHeroById(para).then(res => {
+          console.loh(res);
+        });
+      }
+    },
     mounted() {
       if (this.$route.query.id) {
         this.id = this.$route.query.id;
         this.update = true;
+        this.updated = true;
         this.querySkill();
       }
-      this.querySkillList();
+      this.init();
+      this.createHero();
     }
   }
 </script>
 
 <style scoped>
-
+  .title {
+    text-align: right;
+    padding-right: 10px;
+  }
+</style>
+<style>
+  .hero-create-container .form-custom .el-col {
+    margin-top: 15px;
+  }
 </style>

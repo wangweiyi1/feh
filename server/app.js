@@ -11,10 +11,10 @@ app.use(bodyParser.urlencoded({
 }));
 
 //注册接口
-let skill = require('./routes/skill');
-let weapon = require('./routes/weapon');
-app.use('/skill', skill);
-app.use('/weapon', weapon);
+app.use('/skill', require('./routes/skill'));
+app.use('/weapon', require('./routes/weapon'));
+app.use('/hero', require('./routes/hero'));
+app.use('/common', require('./routes/common'));
 
 app.all("*", function(req, res, next) {
   let origin = req.headers.origin;
