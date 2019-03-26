@@ -19,7 +19,7 @@
           <el-input type="textarea" name="description" style="width:400px;" v-model="form.description"></el-input>
         </el-form-item>
         <el-form-item label="登场作品">
-          <el-select v-model="form.production" placeholder="请选择" name="from">
+          <el-select v-model="form.production" placeholder="请选择" name="production">
             <el-option v-for="item in productionList" :key="item.id" :label="item.name" :value="item.id">
             </el-option>
           </el-select>
@@ -32,41 +32,41 @@
         </el-form-item>
         <el-form-item label="是否是大英雄或者涡战英雄">
           <el-radio-group v-model="form.special_hero">
-            <el-radio :label="true" name="position">是</el-radio>
-            <el-radio :label="false" name="position">否</el-radio>
+            <el-radio :label="true" name="special_hero">是</el-radio>
+            <el-radio :label="false" name="special_hero">否</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="移动方式">
-          <el-radio-group v-model="form.select_move" size="small">
+          <el-radio-group v-model="form.move" size="small">
             <template v-for="item in moveList">
-              <el-radio :label="item.key" name="select_move" border>{{item.value}}</el-radio>
+              <el-radio :label="item.key" name="move" border>{{item.value}}</el-radio>
             </template>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="武器类型">
-          <el-radio-group v-model="form.select_weapon" size="small">
+          <el-radio-group v-model="form.weapon" size="small">
             <template v-for="item in weaponList">
-              <el-radio :label="item.key" name="select_weapon" border>{{item.value}}</el-radio>
+              <el-radio :label="item.key" name="weapon" border>{{item.value}}</el-radio>
             </template>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="是否是真五">
           <el-radio-group v-model="form.top">
-            <el-radio :label="true" name="position">是</el-radio>
-            <el-radio :label="false" name="position">否</el-radio>
+            <el-radio :label="true" name="top">是</el-radio>
+            <el-radio :label="false" name="top">否</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="优势性格">
           <el-checkbox-group v-model="form.good_character" size="small">
             <template v-for="item in characterList">
-              <el-checkbox :label="item.key" name="select_weapon" border>{{item.value}}</el-checkbox>
+              <el-checkbox :label="item.key" name="good_character" border>{{item.value}}</el-checkbox>
             </template>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item label="劣势性格">
           <el-checkbox-group v-model="form.bad_character" size="small">
             <template v-for="item in characterList">
-              <el-checkbox :label="item.key" name="select_weapon" border>{{item.value}}</el-checkbox>
+              <el-checkbox :label="item.key" name="bad_character" border>{{item.value}}</el-checkbox>
             </template>
           </el-checkbox-group>
         </el-form-item>
@@ -168,11 +168,11 @@
   import data from '@/data/data';
   import {
     querySkillById,
-    updateSkill,
     getSkillList,
     uploadPortrait,
     queryAllProduction,
     createHero,
+    updateHero,
     deleteHeroById
   } from '@/api/api'
 
@@ -208,8 +208,8 @@
           top: false,
           special_hero: false,
           production: "",
-          select_weapon: "sword",
-          select_move: "walk",
+          weapon: "sword",
+          move: "walk",
           good_character: [],
           bad_character: [],
           levelFive: {
@@ -309,10 +309,12 @@
         let para = new FormData(this.$refs.form.$el);
         para.append("id", this.id);
         this.loading = true;
-        updateSkill(para).then(res => {
+        updateHero(para).then(res => {
           this.loading = false;
+          this.updated = true;
+          console.log(res.data.data);
           if (res.data.status) {
-            this.$router.push({path: '/hero/list'});
+            // this.$router.push({path: '/hero/list'});
             this.$message.success(res.data.msg);
           } else {
             this.$message.error(res.data.msg);
@@ -353,7 +355,7 @@
         let para = new FormData();
         para.append("id",this.id);
         deleteHeroById(para).then(res => {
-          console.loh(res);
+          console.log(res);
         });
       }
     },

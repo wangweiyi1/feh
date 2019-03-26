@@ -2,8 +2,8 @@ import axios from 'axios';
 
 let base = '';
 
-// base = 'http://127.0.0.1:80';
-base = 'http://39.98.79.79:80';
+base = 'http://127.0.0.1:80';
+// base = 'http://39.98.79.79:80';
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
@@ -22,6 +22,7 @@ export const queryBaseWeapon = params => axios.post(`${base}/weapon/queryBaseWea
 
 export const uploadPortrait = params => axios.post(`${base}/hero/uploadPortrait`, params);
 export const createHero = params => axios.post(`${base}/hero/createHero`, params);
+export const updateHero = params => axios.post(`${base}/hero/updateHero`, params);
 export const deleteHeroById = params => axios.post(`${base}/hero/deleteHeroById`, params);
 
 export const queryAllProduction = params => axios.post(`${base}/common/queryAllProduction`, params);

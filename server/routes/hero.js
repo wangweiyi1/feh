@@ -46,6 +46,18 @@ router.post('/createHero', function (req, res, next) {
   })
 });
 
+router.post('/updateHero',multipartMiddleware, function (req, res, next) {
+  res.set('Access-Control-Allow-Origin', '*');
+
+  heroService.updateHero(req.body,(results,error)=>{
+    if(error){
+      res.status(500).json({"status":false,"msg":error,"data":[]});
+    }else{
+      res.status(200).json({"status":true,"msg":"success","data":results});
+    }
+  })
+});
+
 router.post('/deleteHeroById',multipartMiddleware, function (req, res, next) {
   res.set('Access-Control-Allow-Origin', '*');
 
