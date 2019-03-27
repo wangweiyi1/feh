@@ -113,43 +113,201 @@
 
                 <el-col :span="2" class="title">武器</el-col>
                 <el-col :span="22">
-                  <el-select v-model="form.levelFive.weapon" placeholder="请选择">
+                  <el-select v-model="form.levelFive.weapon" name="levelFive.weapon" placeholder="请选择">
                   </el-select>
                 </el-col>
 
                 <el-col :span="2" class="title">辅助技能</el-col>
                 <el-col :span="22">
-                  <el-select v-model="form.levelFive.sup" placeholder="请选择">
+                  <el-select v-model="form.levelFive.sup" name="levelFive.sup" placeholder="请选择">
                   </el-select>
                 </el-col>
 
                 <el-col :span="2" class="title">奥义</el-col>
                 <el-col :span="22">
-                  <el-select v-model="form.levelFive.kill" placeholder="请选择">
+                  <el-select v-model="form.levelFive.kill" name="levelFive.kill" placeholder="请选择">
                   </el-select>
                 </el-col>
 
                 <el-col :span="2" class="title">A</el-col>
                 <el-col :span="22">
-                  <el-select v-model="form.levelFive.a" placeholder="请选择">
+                  <el-select v-model="form.levelFive.a" name="levelFive.a" placeholder="请选择">
                   </el-select>
                 </el-col>
 
                 <el-col :span="2" class="title">B</el-col>
                 <el-col :span="22">
-                  <el-select v-model="form.levelFive.b" placeholder="请选择">
+                  <el-select v-model="form.levelFive.b" name="levelFive.b" placeholder="请选择">
                   </el-select>
                 </el-col>
 
                 <el-col :span="2" class="title">C</el-col>
                 <el-col :span="22">
-                  <el-select v-model="form.levelFive.c" placeholder="请选择">
+                  <el-select v-model="form.levelFive.c" name="levelFive.c" placeholder="请选择">
                   </el-select>
                 </el-col>
               </el-row>
             </el-tab-pane>
-            <el-tab-pane label="四星" name="second" v-if="levels.indexOf('4') != -1">配置管理</el-tab-pane>
-            <el-tab-pane label="三星" name="third" v-if="levels.indexOf('3') != -1">角色管理</el-tab-pane>
+            <el-tab-pane label="四星" name="second">
+              <el-radio-group v-model="form.hasFour" name="hasFour">
+                <el-radio :label="true">有四星版本</el-radio>
+                <el-radio :label="false">无四星版本</el-radio>
+              </el-radio-group>
+              <el-row class="form-custom" v-if="form.hasFour">
+                <el-col :span="2" class="title">1级属性</el-col>
+                <el-col :span="22">
+                  HP:
+                  <el-input v-model="form.levelFour.level1_hp" name="levelFour.level1_hp" class="input-shot"></el-input>
+                  ATK:
+                  <el-input v-model="form.levelFour.level1_atk" name="levelFour.level1_atk"
+                            class="input-shot"></el-input>
+                  SPD:
+                  <el-input v-model="form.levelFour.level1_spd" name="levelFour.level1_spd"
+                            class="input-shot"></el-input>
+                  DEF:
+                  <el-input v-model="form.levelFour.level1_def" name="levelFour.level1_def"
+                            class="input-shot"></el-input>
+                  RES:
+                  <el-input v-model="form.levelFour.level1_res" name="levelFour.level1_res"
+                            class="input-shot"></el-input>
+                </el-col>
+
+                <el-col :span="2" class="title">40级属性</el-col>
+                <el-col :span="22">
+                  HP:
+                  <el-input v-model="form.levelFour.level40_hp" name="levelFour.level40_hp"
+                            class="input-shot"></el-input>
+                  ATK:
+                  <el-input v-model="form.levelFour.level40_atk" name="levelFour.level40_atk"
+                            class="input-shot"></el-input>
+                  SPD:
+                  <el-input v-model="form.levelFour.level40_spd" name="levelFour.level40_spd"
+                            class="input-shot"></el-input>
+                  DEF:
+                  <el-input v-model="form.levelFour.level40_def" name="levelFour.level40_def"
+                            class="input-shot"></el-input>
+                  RES:
+                  <el-input v-model="form.levelFour.level40_res" name="levelFour.level40_res"
+                            class="input-shot"></el-input>
+                </el-col>
+
+                <el-col :span="2" class="title">武器</el-col>
+                <el-col :span="22">
+                  <el-select v-model="form.levelFour.weapon" name="levelFour.weapon" placeholder="请选择">
+                  </el-select>
+                </el-col>
+
+                <el-col :span="2" class="title">辅助技能</el-col>
+                <el-col :span="22">
+                  <el-select v-model="form.levelFour.sup" name="levelFour.sup" placeholder="请选择">
+                  </el-select>
+                </el-col>
+
+                <el-col :span="2" class="title">奥义</el-col>
+                <el-col :span="22">
+                  <el-select v-model="form.levelFour.kill" name="levelFour.kill" placeholder="请选择">
+                  </el-select>
+                </el-col>
+
+                <el-col :span="2" class="title">A</el-col>
+                <el-col :span="22">
+                  <el-select v-model="form.levelFour.a" name="levelFour.a" placeholder="请选择">
+                  </el-select>
+                </el-col>
+
+                <el-col :span="2" class="title">B</el-col>
+                <el-col :span="22">
+                  <el-select v-model="form.levelFour.b" name="levelFour.b" placeholder="请选择">
+                  </el-select>
+                </el-col>
+
+                <el-col :span="2" class="title">C</el-col>
+                <el-col :span="22">
+                  <el-select v-model="form.levelFour.c" name="levelFour.c" placeholder="请选择">
+                  </el-select>
+                </el-col>
+              </el-row>
+            </el-tab-pane>
+            <el-tab-pane label="三星" name="third">
+              <el-radio-group v-model="form.hasThree" name="hasThree">
+                <el-radio :label="true">有三星版本</el-radio>
+                <el-radio :label="false">无三星版本</el-radio>
+              </el-radio-group>
+              <el-row class="form-custom" v-if="form.hasThree">
+                <el-col :span="2" class="title">1级属性</el-col>
+                <el-col :span="22">
+                  HP:
+                  <el-input v-model="form.levelThree.level1_hp" name="levelThree.level1_hp" class="input-shot"></el-input>
+                  ATK:
+                  <el-input v-model="form.levelThree.level1_atk" name="levelThree.level1_atk"
+                            class="input-shot"></el-input>
+                  SPD:
+                  <el-input v-model="form.levelThree.level1_spd" name="levelThree.level1_spd"
+                            class="input-shot"></el-input>
+                  DEF:
+                  <el-input v-model="form.levelThree.level1_def" name="levelThree.level1_def"
+                            class="input-shot"></el-input>
+                  RES:
+                  <el-input v-model="form.levelThree.level1_res" name="levelThree.level1_res"
+                            class="input-shot"></el-input>
+                </el-col>
+
+                <el-col :span="2" class="title">40级属性</el-col>
+                <el-col :span="22">
+                  HP:
+                  <el-input v-model="form.levelThree.level40_hp" name="levelThree.level40_hp"
+                            class="input-shot"></el-input>
+                  ATK:
+                  <el-input v-model="form.levelThree.level40_atk" name="levelThree.level40_atk"
+                            class="input-shot"></el-input>
+                  SPD:
+                  <el-input v-model="form.levelThree.level40_spd" name="levelThree.level40_spd"
+                            class="input-shot"></el-input>
+                  DEF:
+                  <el-input v-model="form.levelThree.level40_def" name="levelThree.level40_def"
+                            class="input-shot"></el-input>
+                  RES:
+                  <el-input v-model="form.levelThree.level40_res" name="levelThree.level40_res"
+                            class="input-shot"></el-input>
+                </el-col>
+
+                <el-col :span="2" class="title">武器</el-col>
+                <el-col :span="22">
+                  <el-select v-model="form.levelThree.weapon" name="levelThree.weapon" placeholder="请选择">
+                  </el-select>
+                </el-col>
+
+                <el-col :span="2" class="title">辅助技能</el-col>
+                <el-col :span="22">
+                  <el-select v-model="form.levelThree.sup" name="levelThree.sup" placeholder="请选择">
+                  </el-select>
+                </el-col>
+
+                <el-col :span="2" class="title">奥义</el-col>
+                <el-col :span="22">
+                  <el-select v-model="form.levelThree.kill" name="levelThree.kill" placeholder="请选择">
+                  </el-select>
+                </el-col>
+
+                <el-col :span="2" class="title">A</el-col>
+                <el-col :span="22">
+                  <el-select v-model="form.levelThree.a" name="levelThree.a" placeholder="请选择">
+                  </el-select>
+                </el-col>
+
+                <el-col :span="2" class="title">B</el-col>
+                <el-col :span="22">
+                  <el-select v-model="form.levelThree.b" name="levelThree.b" placeholder="请选择">
+                  </el-select>
+                </el-col>
+
+                <el-col :span="2" class="title">C</el-col>
+                <el-col :span="22">
+                  <el-select v-model="form.levelThree.c" name="levelThree.c" placeholder="请选择">
+                  </el-select>
+                </el-col>
+              </el-row>
+            </el-tab-pane>
 
 
           </el-tabs>
@@ -212,6 +370,8 @@
           move: "walk",
           good_character: [],
           bad_character: [],
+          hasFour:false,
+          hasThree:false,
           levelFive: {
             level1_hp: 0,
             level1_atk: 0,
@@ -281,18 +441,6 @@
       handleAvatarSuccess(res, file) {
         this.imageUrl = URL.createObjectURL(file.raw);
       },
-      beforeAvatarUpload(file) {
-        const isJPG = file.type === 'image/jpeg';
-        const isLt2M = file.size / 1024 / 1024 < 2;
-
-        if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
-        }
-        if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
-        }
-        return isJPG && isLt2M;
-      },
       submit() {
         this.updateHero();
       },
@@ -308,6 +456,7 @@
       updateHero() {
         let para = new FormData(this.$refs.form.$el);
         para.append("id", this.id);
+        para.set("production",this.form.production);
         this.loading = true;
         updateHero(para).then(res => {
           this.loading = false;
