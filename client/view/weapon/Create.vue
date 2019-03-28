@@ -9,7 +9,10 @@
           <el-input type="textarea" name="description" style="width:400px;" v-model="form.description"></el-input>
         </el-form-item>
         <el-form-item label="学习所需sp">
-          <el-input v-model="form.sp" name="sp"></el-input>
+          <el-select v-model="form.sp" placeholder="请选择" name="sp">
+            <el-option v-for="item in spList" :key="item.value" :label="item.label" :value="item.value">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="武器类型">
           <el-radio-group v-model="form.type" size="small">
@@ -39,9 +42,21 @@
             </el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="锻造前的武器" v-if="form.build">
+          <!--stone: {type: Sequelize.INTEGER},-->
+          <!--medals: {type: Sequelize.INTEGER},-->
+          <!--water: {type: Sequelize.INTEGER},-->
+          奖牌
+          <el-input v-model="form.stone" name="stone"></el-input>
+          炼成石
+          <el-input v-model="form.medals" name="medals"></el-input>
+          水滴
+          <el-input v-model="form.water" name="water"></el-input>
+        </el-form-item>
         <el-form-item label="影响属性">
           HP: <el-input-number v-model="form.hp" name="hp" class="input-shot"></el-input-number>
           ATK: <el-input-number v-model="form.atk" name="atk" class="input-shot"></el-input-number>
+          ATK2: <el-input-number v-model="form.atk2" name="atk2" class="input-shot"></el-input-number>
           SPD: <el-input-number v-model="form.spd" name="spd" class="input-shot"></el-input-number>
           DEF: <el-input-number v-model="form.def" name="def" class="input-shot"></el-input-number>
           RES: <el-input-number v-model="form.res" name="res" class="input-shot"></el-input-number>
@@ -69,6 +84,14 @@
         weaponList:data.weaponList,
         moveList:data.moveList,
         baseWeaponList:[],
+        spList: [
+          {value: 50, label: '50'},
+          {value: 100, label: '100'},
+          {value: 200, label: '200'},
+          {value: 300, label: '300'},
+          {value: 350, label: '350'},
+          {value: 400, label: '400'},
+        ],
         form:{
           name:"",
           description:"",
@@ -77,8 +100,12 @@
           type:"sword",
           build_id:"",
           build:false,
+          medals:0,
+          stone:0,
+          water:0,
           hp:0,
           atk:0,
+          atk2:0,
           spd:0,
           def:0,
           res:0,
@@ -101,6 +128,7 @@
           this.loading = false;
           if(res.data.status){
             this.$message.success(res.data.msg);
+            this.queryBaseWeapon();
           }else{
             this.$message.error(res.data.msg);
           }
@@ -134,6 +162,12 @@
           console.log(data);
           this.form = data;
         })
+      },
+      queryBaseWeapon(){
+        queryBaseWeapon().then(res=>{
+          let data = res.data.data;
+          this.baseWeaponList = data;
+        });
       }
     },
     mounted(){
@@ -142,10 +176,7 @@
         this.update = true;
         this.queryWeapon();
       }
-      queryBaseWeapon().then(res=>{
-        let data = res.data.data;
-        this.baseWeaponList = data;
-      });
+      this.queryBaseWeapon();
     }
   }
 </script>

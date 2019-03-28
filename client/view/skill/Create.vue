@@ -96,13 +96,13 @@
         moveList: data.moveList,
         form: {
           name: "",
-          position: "b",
+          position: "kill",
           description: "",
           exclusive: false,
           sp: "",
-          level: 1,
+          level: 3,
           build: false,
-          cd: 1,
+          cd: 3,
           select_weapon: [],
           select_move: [],
           hp: 0,
@@ -113,6 +113,7 @@
           attribute:0,
         },
         spList: [
+          {value: 30, label: '30'},
           {value: 40, label: '40'},
           {value: 50, label: '50'},
           {value: 60, label: '60'},
@@ -127,6 +128,7 @@
           {value: 300, label: '300'},
           {value: 350, label: '350'},
           {value: 400, label: '400'},
+          {value: 500, label: '500'},
         ],
         attributeList:[
           {value: 0, label: '0'},

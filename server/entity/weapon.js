@@ -17,9 +17,13 @@ const Weapon = db.define('weapon', {
   build_id: {type: Sequelize.INTEGER},
   hp: {type: Sequelize.INTEGER},
   atk: {type: Sequelize.INTEGER},
+  atk2: {type: Sequelize.INTEGER},
   spd: {type: Sequelize.INTEGER},
   def: {type: Sequelize.INTEGER},
   res: {type: Sequelize.INTEGER},
+  stone: {type: Sequelize.INTEGER},
+  medals: {type: Sequelize.INTEGER},
+  water: {type: Sequelize.INTEGER},
   creation: {type: Sequelize.STRING},
   lase_modified: {type: Sequelize.STRING},
 }, {

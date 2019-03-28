@@ -19,9 +19,9 @@ module.exports.getWeaponListLimit = (params,cb) => {
   // if(params.level == "true"){
   //   where.level = {$gte:3};
   // }
-  // condition.order = [
-  //   ['id', 'DESC'],
-  // ];
+  condition.order = [
+    ['id', 'DESC'],
+  ];
   condition.where = where;
   if(params.pageSize && params.currentPage){
     condition.limit = Number(params.pageSize);
@@ -86,11 +86,13 @@ module.exports.updateWeapon = (params,cb) => {
 module.exports.queryBaseWeapon = (params,cb) => {
   let condition = {};
   condition.where = {
+    // build:false,
     sp:{
-      $gte:350
+      $gte:300,
+      $ne: 350,
     },
-    build:false,
   };
+  condition.order = [['creation', 'DESC']];
   return weaponEntity.weapon.findAll(condition).then((results)=>{
     cb(results);
   }).catch((error)=>{
