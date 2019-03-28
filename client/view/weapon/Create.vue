@@ -97,7 +97,7 @@
           description:"",
           exclusive:false,
           sp:"",
-          type:"sword",
+          type:"axe",
           build_id:"",
           build:false,
           medals:0,
