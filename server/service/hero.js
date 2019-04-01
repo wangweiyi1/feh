@@ -4,21 +4,10 @@ const heroAttributeEntity = require('../entity/hero_attribute');
 const util = require('../util/util');
 
 module.exports.createHero = (cb) => {
-  return heroEntity.hero.create().then((results) => {
+  return heroEntity.hero.create({update:false}).then((results) => {
     cb(results);
   }).catch((error) => {
     cb([], "创建失败");
-  });
-};
-
-module.exports.updatePortrait = (params, cb) => {
-  let data = {
-    portrait: params.path,
-  };
-  return heroEntity.hero.update(data,{where:{id:params.id}}).then(async (results)=>{
-    cb(result);
-  }).catch((error)=>{
-    cb([],"修改失败");
   });
 };
 
@@ -31,6 +20,7 @@ module.exports.updateHero = (params, cb) => {
     production: params.production,
     weapon: params.weapon,
     move: params.move,
+    update:true,
     limit: (params.limit == "true") ? true : false,
     top: (params.top == "true") ? true : false,
     special_hero: (params.special_hero == "true") ? true : false,

@@ -16,6 +16,7 @@ const hero = db.define('hero', {
   move: {type: Sequelize.STRING},
   limit: {type: Sequelize.BOOLEAN},
   top: {type: Sequelize.BOOLEAN},
+  update: {type: Sequelize.BOOLEAN},
   special_hero: {type: Sequelize.BOOLEAN},
   good_character: {type: Sequelize.STRING},
   bad_character: {type: Sequelize.STRING},

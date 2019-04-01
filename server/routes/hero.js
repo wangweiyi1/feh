@@ -14,7 +14,6 @@ let Storage = multer.diskStorage({
     callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
   }
 });
-// let upload = multer({storage: Storage}).array("file", 3);
 let upload = multer({storage: Storage}).single("file");
 
 /* GET users listing. */
