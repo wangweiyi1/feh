@@ -25,6 +25,7 @@ module.exports.updatePortrait = (params, cb) => {
 module.exports.updateHero = (params, cb) => {
   let result = {};
   let data = {
+    portrait:params.portraitUrl,
     name: params.name,
     description: params.description,
     production: params.production,

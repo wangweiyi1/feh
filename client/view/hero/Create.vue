@@ -474,6 +474,7 @@
         let para = new FormData(this.$refs.form.$el);
         para.append("id", this.id);
         para.set("production",this.form.production);
+        para.set("portraitUrl",this.portraitUrl);
         this.loading = true;
         updateHero(para).then(res => {
           this.loading = false;
