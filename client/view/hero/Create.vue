@@ -59,14 +59,14 @@
         <el-form-item label="优势性格">
           <el-checkbox-group v-model="form.good_character" size="small">
             <template v-for="item in characterList">
-              <el-checkbox :label="item.key" name="form.good_character" border>{{item.value}}</el-checkbox>
+              <el-checkbox :label="item.key" name="good_character" border>{{item.value}}</el-checkbox>
             </template>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item label="劣势性格">
           <el-checkbox-group v-model="form.bad_character" size="small">
             <template v-for="item in characterList">
-              <el-checkbox :label="item.key" name="form.bad_character" border>{{item.value}}</el-checkbox>
+              <el-checkbox :label="item.key" name="bad_character" border>{{item.value}}</el-checkbox>
             </template>
           </el-checkbox-group>
         </el-form-item>

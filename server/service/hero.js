@@ -20,6 +20,8 @@ module.exports.updateHero = (params, cb) => {
     production: params.production,
     weapon: params.weapon,
     move: params.move,
+    good_character:params.good_character,
+    bad_character:params.bad_character,
     update:true,
     limit: (params.limit == "true") ? true : false,
     top: (params.top == "true") ? true : false,
@@ -70,12 +72,12 @@ module.exports.createAttribute = (params) => {
     spd_40: params.level40_spd,
     def_40: params.level40_def,
     res_40: params.level40_res,
-    weapon: params.move,
-    sup: params.move,
-    kill: params.move,
-    a: params.move,
-    b: params.move,
-    c: params.move,
+    weapon: params.weapon,
+    sup: params.sup,
+    kill: params.kill,
+    a: params.a,
+    b: params.b,
+    c: params.c,
   };
   return attributeEntity.attribute.create(data);
 };
