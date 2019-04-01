@@ -28,6 +28,7 @@ router.post('/uploadPortrait', function (req, res, next) {
     if (err) {
       res.status(500).json({"status":false,"msg":'上传失败',"data":[]});
     }
+    let path = 'static' + req.file.path.split("static")[1];
     res.status(200).json({"status":true,"msg":'上传成功',"data":req.file.path});
   });
 });
