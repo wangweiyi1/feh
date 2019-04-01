@@ -1,10 +1,10 @@
 const weaponList = [
   {key:"sword",value:"剑"},
-  {key:"axe",value:"斧"},
   {key:"spear",value:"枪"},
+  {key:"axe",value:"斧"},
   {key:"mage_red",value:"红书"},
-  {key:"mage_green",value:"绿书"},
   {key:"mage_blue",value:"蓝书"},
+  {key:"mage_green",value:"绿书"},
   {key:"bow_red",value:"红弓"},
   {key:"bow_green",value:"绿弓"},
   {key:"bow_blue",value:"蓝弓"},
@@ -24,6 +24,20 @@ const weaponList = [
   {key:"rod",value:"杖"},
 ];
 
+const weaponList_hero = [
+  {key:"sword",value:"剑"},
+  {key:"spear",value:"枪"},
+  {key:"axe",value:"斧"},
+  {key:"mage_red",value:"红书"},
+  {key:"mage_blue",value:"蓝书"},
+  {key:"mage_green",value:"绿书"},
+  {key:"bow",value:"弓"},
+  {key:"dart",value:"镖"},
+  {key:"rod",value:"杖"},
+  {key:"dragon",value:"龙"},
+  {key:"orc",value:"兽"},
+];
+
 const moveList = [
   {key:"walk",value:"步行"},
   {key:"cavalry",value:"骑马"},
@@ -34,5 +48,6 @@ const moveList = [
 
 export default {
   weaponList,
-  moveList
+  moveList,
+  weaponList_hero
 }

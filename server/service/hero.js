@@ -33,6 +33,22 @@ module.exports.updateHero = (params, cb) => {
       hero_id:Number(params.id),
       attribute_id:result.attribute.level5.id,
     });
+    if(params.hasFour){
+      result.attribute.level4 = await this.createAttribute(params.levelFour);
+      await this.createHeroAttribute({
+        level:4,
+        hero_id:Number(params.id),
+        attribute_id:result.attribute.level4.id,
+      });
+    }
+    if(params.hasThree){
+      result.attribute.level3 = await this.createAttribute(params.levelThree);
+      await this.createHeroAttribute({
+        level:3,
+        hero_id:Number(params.id),
+        attribute_id:result.attribute.level3.id,
+      });
+    }
     // this.createAttribute(params.levelFive,result,cb);
     cb(result);
   }).catch((error)=>{
