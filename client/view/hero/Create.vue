@@ -45,7 +45,7 @@
         </el-form-item>
         <el-form-item label="武器类型">
           <el-radio-group v-model="form.weapon" size="small">
-            <template v-for="item in weaponList">
+            <template v-for="item in weaponTypeList">
               <el-radio :label="item.key" name="weapon" border>{{item.value}}</el-radio>
             </template>
           </el-radio-group>
@@ -113,37 +113,49 @@
 
                 <el-col :span="2" class="title">武器</el-col>
                 <el-col :span="22">
-                  <el-select v-model="form.levelFive.weapon" name="levelFive.weapon" placeholder="请选择">
+                  <el-select v-model="form.levelFive.weapon" name="levelFive.weapon" placeholder="请选择" filterable clearable>
+                    <el-option v-for="item in weaponList" v-if="item.type == form.weapon" :key="item.id" :label="item.name" :value="item.id">
+                    </el-option>
                   </el-select>
                 </el-col>
 
                 <el-col :span="2" class="title">辅助技能</el-col>
                 <el-col :span="22">
-                  <el-select v-model="form.levelFive.sup" name="levelFive.sup" placeholder="请选择">
+                  <el-select v-model="form.levelFive.sup" name="levelFive.sup" placeholder="请选择" filterable clearable>
+                    <el-option v-for="item in skillList" v-if="item.position == 'sup'" :key="item.id" :label="item.name" :value="item.id">
+                    </el-option>
                   </el-select>
                 </el-col>
 
                 <el-col :span="2" class="title">奥义</el-col>
                 <el-col :span="22">
-                  <el-select v-model="form.levelFive.kill" name="levelFive.kill" placeholder="请选择">
+                  <el-select v-model="form.levelFive.kill" name="levelFive.kill" placeholder="请选择" filterable clearable>
+                    <el-option v-for="item in skillList" v-if="item.position == 'kill'" :key="item.id" :label="item.name" :value="item.id">
+                    </el-option>
                   </el-select>
                 </el-col>
 
                 <el-col :span="2" class="title">A</el-col>
                 <el-col :span="22">
-                  <el-select v-model="form.levelFive.a" name="levelFive.a" placeholder="请选择">
+                  <el-select v-model="form.levelFive.a" name="levelFive.a" placeholder="请选择" filterable clearable>
+                    <el-option v-for="item in skillList" v-if="item.position == 'a'" :key="item.id" :label="item.name" :value="item.id">
+                    </el-option>
                   </el-select>
                 </el-col>
 
                 <el-col :span="2" class="title">B</el-col>
                 <el-col :span="22">
-                  <el-select v-model="form.levelFive.b" name="levelFive.b" placeholder="请选择">
+                  <el-select v-model="form.levelFive.b" name="levelFive.b" placeholder="请选择" filterable clearable>
+                    <el-option v-for="item in skillList" v-if="item.position == 'b'" :key="item.id" :label="item.name" :value="item.id">
+                    </el-option>
                   </el-select>
                 </el-col>
 
                 <el-col :span="2" class="title">C</el-col>
                 <el-col :span="22">
-                  <el-select v-model="form.levelFive.c" name="levelFive.c" placeholder="请选择">
+                  <el-select v-model="form.levelFive.c" name="levelFive.c" placeholder="请选择" filterable clearable>
+                    <el-option v-for="item in skillList" v-if="item.position == 'c'" :key="item.id" :label="item.name" :value="item.id">
+                    </el-option>
                   </el-select>
                 </el-col>
               </el-row>
@@ -331,7 +343,8 @@
     queryAllProduction,
     createHero,
     updateHero,
-    deleteHeroById
+    deleteHeroById,
+    getWeaponList
   } from '@/api/api'
 
   export default {
@@ -339,6 +352,7 @@
       return {
         id: 0,
         imageUrl: "",
+        portraitUrl:"",
         value: "",
         fileData: {
           id: 0
@@ -346,10 +360,11 @@
         update: false,
         updated: false,
         loading: false,
-        weaponList: data.weaponList,
+        weaponTypeList: data.weaponList,
         moveList: data.moveList,
         productionList: [],
         skillList: [],
+        weaponList:[],
         characterList: [
           {key: "hp", value: "HP"},
           {key: "atk", value: "攻击"},
@@ -430,15 +445,17 @@
       }
     },
     methods: {
-      uploadPortrait(file) {
-        let para = new FormData()
-        para.append('file', file)
-        console.log(para);
-        uploadPortrait(para).then(res => {
-          console.log(res);
-        });
-      },
+      // uploadPortrait(file) {
+      //   let para = new FormData();
+      //   para.append('id', this.id);
+      //   para.append('file', file);
+      //   uploadPortrait(para).then(res => {
+      //     console.log(res);
+      //     // this.
+      //   });
+      // },
       handleAvatarSuccess(res, file) {
+        this.portraitUrl = res.data;
         this.imageUrl = URL.createObjectURL(file.raw);
       },
       submit() {
@@ -470,21 +487,10 @@
           }
         })
       },
-      querySkill() {
-        let para = new FormData();
-        para.append("id", this.id);
-        this.loading = true;
-        querySkillById(para).then(res => {
-          this.loading = false;
-          let data = res.data.data;
-          data.select_move = data.select_move.split(",");
-          data.select_weapon = data.select_weapon.split(",");
-          this.form = data;
-        })
-      },
       init() {
         this.querySkillList();
         this.queryAllProduction();
+        this.queryWeaponList();
       },
       queryAllProduction() {
         queryAllProduction().then(res => {
@@ -493,11 +499,18 @@
       },
       querySkillList() {
         let para = new FormData();
-        para.append("level", "true");
+        para.append("level", "false");
         getSkillList(para).then(res => {
           this.skillList = res.data.data;
         })
-      }
+      },
+      queryWeaponList(){
+        let para = new FormData();
+        para.append("level", "true");
+        getWeaponList(para).then(res => {
+          this.weaponList = res.data.data;
+        })
+      },
     },
     beforeDestroy(){
       if(!this.updated){
@@ -509,14 +522,14 @@
       }
     },
     mounted() {
+      this.init();
       if (this.$route.query.id) {
         this.id = this.$route.query.id;
         this.update = true;
         this.updated = true;
-        this.querySkill();
+      }else{
+        this.createHero();
       }
-      this.init();
-      this.createHero();
     }
   }
 </script>

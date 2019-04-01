@@ -3,7 +3,7 @@
     <el-card>
       <el-row>
         <el-col :span="4">
-          <el-button @click="linkCreateSkill" size="mini">新建技能</el-button>
+          <el-button @click="linkCreateSkill" size="mini">新建英雄</el-button>
         </el-col>
         <el-col :span="20" class="conditon-list">
           <el-switch v-model="condition.level" @change="updateCondition" active-text="只显示高级技能" inactive-text="显示所有技能"

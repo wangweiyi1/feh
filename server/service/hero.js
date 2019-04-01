@@ -11,6 +11,17 @@ module.exports.createHero = (cb) => {
   });
 };
 
+module.exports.updatePortrait = (params, cb) => {
+  let data = {
+    portrait: params.path,
+  };
+  return heroEntity.hero.update(data,{where:{id:params.id}}).then(async (results)=>{
+    cb(result);
+  }).catch((error)=>{
+    cb([],"修改失败");
+  });
+};
+
 module.exports.updateHero = (params, cb) => {
   let result = {};
   let data = {
