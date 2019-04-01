@@ -475,6 +475,13 @@
         para.append("id", this.id);
         para.set("production",this.form.production);
         para.set("portraitUrl",this.portraitUrl);
+
+        para.set("levelFive.weapon",this.form.levelFive.weapon);
+        para.set("levelFive.sup",this.form.levelFive.sup);
+        para.set("levelFive.kill",this.form.levelFive.kill);
+        para.set("levelFive.a",this.form.levelFive.a);
+        para.set("levelFive.b",this.form.levelFive.b);
+        para.set("levelFive.c",this.form.levelFive.c);
         this.loading = true;
         updateHero(para).then(res => {
           this.loading = false;
