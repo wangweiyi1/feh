@@ -20,13 +20,17 @@ module.exports.updateHero = (params, cb) => {
     production: params.production,
     weapon: params.weapon,
     move: params.move,
-    good_character:typeof params.good_character == "string" ? params.good_character : params.good_character.join(","),
-    bad_character:typeof params.bad_character == "string" ? params.bad_character : params.bad_character.join(","),
     update:true,
     limit: (params.limit == "true") ? true : false,
     top: (params.top == "true") ? true : false,
     special_hero: (params.special_hero == "true") ? true : false,
   };
+  if(params.good_character != undefined){
+    data.good_character = typeof params.good_character == "string" ? params.good_character : params.good_character.join(",");
+  }
+  if(params.bad_character != undefined){
+    data.bad_character = typeof params.bad_character == "string" ? params.bad_character : params.bad_character.join(",");
+  }
   return heroEntity.hero.update(data,{where:{id:params.id}}).then(async (results)=>{
     result.hero = results;
     params.levelFive.level = 5;

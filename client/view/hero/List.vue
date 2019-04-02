@@ -28,8 +28,14 @@
         <el-table-column prop="name" label="名字">
         </el-table-column>
         <el-table-column prop="weapon" label="武器类型">
+          <template slot-scope="scope">
+            <img :src="'/static/img/icon/'+scope.row.weapon+'.png'" class="icon" alt="">
+          </template>
         </el-table-column>
         <el-table-column prop="move" label="移动类型">
+          <template slot-scope="scope">
+            <img :src="'/static/img/icon/'+scope.row.move+'.png'" class="icon" alt="">
+          </template>
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
