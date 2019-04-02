@@ -24,5 +24,6 @@ export const uploadPortrait = params => axios.post(`${base}/hero/uploadPortrait`
 export const createHero = params => axios.post(`${base}/hero/createHero`, params);
 export const updateHero = params => axios.post(`${base}/hero/updateHero`, params);
 export const deleteHeroById = params => axios.post(`${base}/hero/deleteHeroById`, params);
+export const getHeroList = params => axios.post(`${base}/hero/getHeroList`, params);
 
 export const queryAllProduction = params => axios.post(`${base}/common/queryAllProduction`, params);
