@@ -20,8 +20,8 @@ module.exports.updateHero = (params, cb) => {
     production: params.production,
     weapon: params.weapon,
     move: params.move,
-    good_character:params.good_character,
-    bad_character:params.bad_character,
+    good_character:typeof params.good_character == "String" ? params.good_character : params.good_character.join(","),
+    bad_character:typeof params.bad_character == "String" ? params.bad_character : params.bad_character.join(","),
     update:true,
     limit: (params.limit == "true") ? true : false,
     top: (params.top == "true") ? true : false,
@@ -110,6 +110,7 @@ module.exports.deleteHeroById = (id, cb) => {
 module.exports.getHeroListLimit = (params,cb) => {
   let condition = {};
   let where = {};
+  where.update = true;
   if(params.text && params.text != ""){
     where.name = {
       $like:"%" + params.text + "%"
