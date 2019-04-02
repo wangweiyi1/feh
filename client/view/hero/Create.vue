@@ -528,6 +528,7 @@
         para.set("levelFive.c",this.form.levelFive.c);
 
         if(this.form.hasFour){
+          para.set("hasFour",this.form.hasFour);
           para.set("levelFour.weapon",this.form.levelFive.weapon);
           para.set("levelFour.sup",this.form.levelFive.sup);
           para.set("levelFour.kill",this.form.levelFive.kill);
@@ -537,6 +538,7 @@
         }
 
         if(this.form.hasThree){
+          para.set("hasThree",this.form.hasThree);
           para.set("levelThree.weapon",this.form.levelFive.weapon);
           para.set("levelThree.sup",this.form.levelFive.sup);
           para.set("levelThree.kill",this.form.levelFive.kill);
