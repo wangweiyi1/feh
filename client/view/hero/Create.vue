@@ -24,6 +24,12 @@
             </el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="是否是传承英雄">
+          <el-radio-group v-model="form.legend">
+            <el-radio :label="true" name="legend">是</el-radio>
+            <el-radio :label="false" name="legend">否</el-radio>
+          </el-radio-group>
+        </el-form-item>
         <el-form-item label="是否是限定英雄">
           <el-radio-group v-model="form.limit">
             <el-radio :label="true" name="limit">是</el-radio>
@@ -403,6 +409,7 @@
           description: "",
           limit: false,
           top: false,
+          legend:false,
           special_hero: false,
           production: "",
           weapon: "sword",
@@ -550,7 +557,6 @@
         updateHero(para).then(res => {
           this.loading = false;
           this.updated = true;
-          console.log(res.data.data);
           if (res.data.status) {
             // this.$router.push({path: '/hero/list'});
             this.$message.success(res.data.msg);
