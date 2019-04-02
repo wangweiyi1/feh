@@ -114,7 +114,7 @@
                 <el-col :span="2" class="title">武器</el-col>
                 <el-col :span="22">
                   <el-select v-model="form.levelFive.weapon" name="levelFive.weapon" placeholder="请选择" filterable clearable>
-                    <el-option v-for="item in weaponList" v-if="item.type == form.weapon" :key="item.id" :label="item.name" :value="item.id">
+                    <el-option v-for="item in weaponList" v-if="checkWeapon(item.type)" :key="item.id" :label="item.name" :value="item.id">
                     </el-option>
                   </el-select>
                 </el-col>
@@ -206,7 +206,7 @@
                 <el-col :span="2" class="title">武器</el-col>
                 <el-col :span="22">
                   <el-select v-model="form.levelFour.weapon" name="levelFour.weapon" placeholder="请选择">
-                    <el-option v-for="item in weaponList" v-if="item.type == form.weapon" :key="item.id" :label="item.name" :value="item.id">
+                    <el-option v-for="item in weaponList" v-if="checkWeapon(item.type)" :key="item.id" :label="item.name" :value="item.id">
                     </el-option>
                   </el-select>
                 </el-col>
@@ -298,7 +298,7 @@
                 <el-col :span="2" class="title">武器</el-col>
                 <el-col :span="22">
                   <el-select v-model="form.levelThree.weapon" name="levelThree.weapon" placeholder="请选择">
-                    <el-option v-for="item in weaponList" v-if="item.type == form.weapon" :key="item.id" :label="item.name" :value="item.id">
+                    <el-option v-for="item in weaponList" v-if="checkWeapon(item.type)" :key="item.id" :label="item.name" :value="item.id">
                     </el-option>
                   </el-select>
                 </el-col>
@@ -469,6 +469,26 @@
       }
     },
     methods: {
+      checkWeapon(type){
+        let result = false;
+        let weapon = this.form.weapon;
+        if(weapon.indexOf('dragon') != -1){
+          weapon = 'dragon';
+        }
+        if(weapon.indexOf('bow') != -1){
+          weapon = 'bow';
+        }
+        if(weapon.indexOf('dart') != -1){
+          weapon = 'dart';
+        }
+        if(weapon.indexOf('orc') != -1){
+          weapon = 'orc';
+        }
+        if(weapon == type){
+          result = true;
+        }
+        return result;
+      },
       // uploadPortrait(file) {
       //   let para = new FormData();
       //   para.append('id', this.id);
