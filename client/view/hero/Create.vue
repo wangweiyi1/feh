@@ -529,22 +529,22 @@
 
         if(this.form.hasFour){
           para.set("hasFour",this.form.hasFour);
-          para.set("levelFour.weapon",this.form.levelFive.weapon);
-          para.set("levelFour.sup",this.form.levelFive.sup);
-          para.set("levelFour.kill",this.form.levelFive.kill);
-          para.set("levelFour.a",this.form.levelFive.a);
-          para.set("levelFour.b",this.form.levelFive.b);
-          para.set("levelFour.c",this.form.levelFive.c);
+          para.set("levelFour.weapon",this.form.levelFour.weapon);
+          para.set("levelFour.sup",this.form.levelFour.sup);
+          para.set("levelFour.kill",this.form.levelFour.kill);
+          para.set("levelFour.a",this.form.levelFour.a);
+          para.set("levelFour.b",this.form.levelFour.b);
+          para.set("levelFour.c",this.form.levelFour.c);
         }
 
         if(this.form.hasThree){
           para.set("hasThree",this.form.hasThree);
-          para.set("levelThree.weapon",this.form.levelFive.weapon);
-          para.set("levelThree.sup",this.form.levelFive.sup);
-          para.set("levelThree.kill",this.form.levelFive.kill);
-          para.set("levelThree.a",this.form.levelFive.a);
-          para.set("levelThree.b",this.form.levelFive.b);
-          para.set("levelThree.c",this.form.levelFive.c);
+          para.set("levelThree.weapon",this.form.levelThree.weapon);
+          para.set("levelThree.sup",this.form.levelThree.sup);
+          para.set("levelThree.kill",this.form.levelThree.kill);
+          para.set("levelThree.a",this.form.levelThree.a);
+          para.set("levelThree.b",this.form.levelThree.b);
+          para.set("levelThree.c",this.form.levelThree.c);
         }
         this.loading = true;
         updateHero(para).then(res => {
