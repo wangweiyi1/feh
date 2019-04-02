@@ -6,32 +6,30 @@
           <el-button @click="linkCreateSkill" size="mini">新建英雄</el-button>
         </el-col>
         <el-col :span="20" class="conditon-list">
-          <el-switch v-model="condition.level" @change="updateCondition" active-text="只显示高级技能" inactive-text="显示所有技能"
-                     size="mini">
-          </el-switch>
-          <el-radio-group v-model="condition.position" @change="updateCondition" size="mini">
-            <el-radio-button label="">All</el-radio-button>
-            <el-radio-button label="a">A</el-radio-button>
-            <el-radio-button label="b">B</el-radio-button>
-            <el-radio-button label="c">C</el-radio-button>
-            <el-radio-button label="sup">辅助技能</el-radio-button>
-            <el-radio-button label="kill">奥义</el-radio-button>
-            <el-radio-button label="seal">圣印</el-radio-button>
-          </el-radio-group>
+          <!--<el-radio-group v-model="condition.position" @change="updateCondition" size="mini">-->
+            <!--<el-radio-button label="">All</el-radio-button>-->
+            <!--<el-radio-button label="a">A</el-radio-button>-->
+            <!--<el-radio-button label="b">B</el-radio-button>-->
+            <!--<el-radio-button label="c">C</el-radio-button>-->
+            <!--<el-radio-button label="sup">辅助技能</el-radio-button>-->
+            <!--<el-radio-button label="kill">奥义</el-radio-button>-->
+            <!--<el-radio-button label="seal">圣印</el-radio-button>-->
+          <!--</el-radio-group>-->
           <el-input v-model="condition.text" @input="updateCondition" size="mini" placeholder="搜索"
                     prefix-icon="el-icon-search"></el-input>
         </el-col>
       </el-row>
       <el-table :data="skillList" style="width: 100%" v-loading="loading.table">
-        <el-table-column prop="name" label="技能">
+        <el-table-column label="头像" width="100">
+          <template slot-scope="scope">
+            <img :src="'http://39.98.79.79'+scope.row.portrait" class="portrait" alt="">
+          </template>
         </el-table-column>
-        <el-table-column prop="description" label="简介" width="400">
+        <el-table-column prop="name" label="名字">
         </el-table-column>
-        <el-table-column prop="level" label="技能等级">
+        <el-table-column prop="weapon" label="武器类型">
         </el-table-column>
-        <el-table-column prop="position" label="位置">
-        </el-table-column>
-        <el-table-column prop="sp" label="所需sp">
+        <el-table-column prop="move" label="移动类型">
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
@@ -56,7 +54,7 @@
 </template>
 
 <script>
-  import {getSkillList, deleteSkill} from '@/api/api'
+  import {getHeroList, deleteSkill} from '@/api/api'
 
   export default {
     data() {
@@ -109,9 +107,9 @@
       },
       updateCondition() {
         this.table.currentPage = 1;
-        this.getSkillList();
+        this.getHeroList();
       },
-      getSkillList() {
+      getHeroList() {
         let para = new FormData();
         para.append("currentPage", this.table.currentPage);
         para.append("pageSize", this.table.pageSize);
@@ -119,7 +117,7 @@
         para.append("position", this.condition.position);
         para.append("text", this.condition.text);
         this.loading.table = true;
-        getSkillList(para).then(res => {
+        getHeroList(para).then(res => {
           console.log(res);
           this.loading.table = false;
           if (res.data.status) {
@@ -130,7 +128,7 @@
       }
     },
     mounted() {
-      this.getSkillList();
+      this.getHeroList();
     }
   }
 </script>
@@ -142,5 +140,10 @@
 
   .conditon-list {
     text-align: right;
+  }
+
+  .portrait{
+    width:50px;
+    height:50px;
   }
 </style>

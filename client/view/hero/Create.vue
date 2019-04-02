@@ -206,36 +206,48 @@
                 <el-col :span="2" class="title">武器</el-col>
                 <el-col :span="22">
                   <el-select v-model="form.levelFour.weapon" name="levelFour.weapon" placeholder="请选择">
+                    <el-option v-for="item in weaponList" v-if="item.type == form.weapon" :key="item.id" :label="item.name" :value="item.id">
+                    </el-option>
                   </el-select>
                 </el-col>
 
                 <el-col :span="2" class="title">辅助技能</el-col>
                 <el-col :span="22">
                   <el-select v-model="form.levelFour.sup" name="levelFour.sup" placeholder="请选择">
+                    <el-option v-for="item in skillList" v-if="item.position == 'sup'" :key="item.id" :label="item.name" :value="item.id">
+                    </el-option>
                   </el-select>
                 </el-col>
 
                 <el-col :span="2" class="title">奥义</el-col>
                 <el-col :span="22">
                   <el-select v-model="form.levelFour.kill" name="levelFour.kill" placeholder="请选择">
+                    <el-option v-for="item in skillList" v-if="item.position == 'kill'" :key="item.id" :label="item.name" :value="item.id">
+                    </el-option>
                   </el-select>
                 </el-col>
 
                 <el-col :span="2" class="title">A</el-col>
                 <el-col :span="22">
                   <el-select v-model="form.levelFour.a" name="levelFour.a" placeholder="请选择">
+                    <el-option v-for="item in skillList" v-if="item.position == 'a'" :key="item.id" :label="item.name" :value="item.id">
+                    </el-option>
                   </el-select>
                 </el-col>
 
                 <el-col :span="2" class="title">B</el-col>
                 <el-col :span="22">
                   <el-select v-model="form.levelFour.b" name="levelFour.b" placeholder="请选择">
+                    <el-option v-for="item in skillList" v-if="item.position == 'b'" :key="item.id" :label="item.name" :value="item.id">
+                    </el-option>
                   </el-select>
                 </el-col>
 
                 <el-col :span="2" class="title">C</el-col>
                 <el-col :span="22">
                   <el-select v-model="form.levelFour.c" name="levelFour.c" placeholder="请选择">
+                    <el-option v-for="item in skillList" v-if="item.position == 'c'" :key="item.id" :label="item.name" :value="item.id">
+                    </el-option>
                   </el-select>
                 </el-col>
               </el-row>
@@ -286,36 +298,48 @@
                 <el-col :span="2" class="title">武器</el-col>
                 <el-col :span="22">
                   <el-select v-model="form.levelThree.weapon" name="levelThree.weapon" placeholder="请选择">
+                    <el-option v-for="item in weaponList" v-if="item.type == form.weapon" :key="item.id" :label="item.name" :value="item.id">
+                    </el-option>
                   </el-select>
                 </el-col>
 
                 <el-col :span="2" class="title">辅助技能</el-col>
                 <el-col :span="22">
                   <el-select v-model="form.levelThree.sup" name="levelThree.sup" placeholder="请选择">
+                    <el-option v-for="item in skillList" v-if="item.position == 'sup'" :key="item.id" :label="item.name" :value="item.id">
+                    </el-option>
                   </el-select>
                 </el-col>
 
                 <el-col :span="2" class="title">奥义</el-col>
                 <el-col :span="22">
                   <el-select v-model="form.levelThree.kill" name="levelThree.kill" placeholder="请选择">
+                    <el-option v-for="item in skillList" v-if="item.position == 'kill'" :key="item.id" :label="item.name" :value="item.id">
+                    </el-option>
                   </el-select>
                 </el-col>
 
                 <el-col :span="2" class="title">A</el-col>
                 <el-col :span="22">
                   <el-select v-model="form.levelThree.a" name="levelThree.a" placeholder="请选择">
+                    <el-option v-for="item in skillList" v-if="item.position == 'a'" :key="item.id" :label="item.name" :value="item.id">
+                    </el-option>
                   </el-select>
                 </el-col>
 
                 <el-col :span="2" class="title">B</el-col>
                 <el-col :span="22">
                   <el-select v-model="form.levelThree.b" name="levelThree.b" placeholder="请选择">
+                    <el-option v-for="item in skillList" v-if="item.position == 'b'" :key="item.id" :label="item.name" :value="item.id">
+                    </el-option>
                   </el-select>
                 </el-col>
 
                 <el-col :span="2" class="title">C</el-col>
                 <el-col :span="22">
                   <el-select v-model="form.levelThree.c" name="levelThree.c" placeholder="请选择">
+                    <el-option v-for="item in skillList" v-if="item.position == 'c'" :key="item.id" :label="item.name" :value="item.id">
+                    </el-option>
                   </el-select>
                 </el-col>
               </el-row>
@@ -482,6 +506,24 @@
         para.set("levelFive.a",this.form.levelFive.a);
         para.set("levelFive.b",this.form.levelFive.b);
         para.set("levelFive.c",this.form.levelFive.c);
+
+        if(this.form.hasFour){
+          para.set("levelFour.weapon",this.form.levelFive.weapon);
+          para.set("levelFour.sup",this.form.levelFive.sup);
+          para.set("levelFour.kill",this.form.levelFive.kill);
+          para.set("levelFour.a",this.form.levelFive.a);
+          para.set("levelFour.b",this.form.levelFive.b);
+          para.set("levelFour.c",this.form.levelFive.c);
+        }
+
+        if(this.form.hasThree){
+          para.set("levelThree.weapon",this.form.levelFive.weapon);
+          para.set("levelThree.sup",this.form.levelFive.sup);
+          para.set("levelThree.kill",this.form.levelFive.kill);
+          para.set("levelThree.a",this.form.levelFive.a);
+          para.set("levelThree.b",this.form.levelFive.b);
+          para.set("levelThree.c",this.form.levelFive.c);
+        }
         this.loading = true;
         updateHero(para).then(res => {
           this.loading = false;

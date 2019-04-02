@@ -106,3 +106,32 @@ module.exports.deleteHeroById = (id, cb) => {
     cb([], "查询失败");
   });
 };
+
+module.exports.getHeroListLimit = (params,cb) => {
+  let condition = {};
+  let where = {};
+  if(params.text && params.text != ""){
+    where.name = {
+      $like:"%" + params.text + "%"
+    }
+  }
+  condition.order = [
+    ['id', 'DESC'],
+  ];
+  condition.where = where;
+  if(params.pageSize && params.currentPage){
+    condition.limit = Number(params.pageSize);
+    condition.offset = (params.currentPage - 1) * params.pageSize;
+    return heroEntity.hero.findAndCount(condition).then((results)=>{
+      cb(results);
+    }).catch((error)=>{
+      cb([],"查询失败");
+    });
+  }else{
+    return heroEntity.hero.findAll(condition).then((results)=>{
+      cb(results);
+    }).catch((error)=>{
+      cb([],"查询失败");
+    });
+  }
+};
