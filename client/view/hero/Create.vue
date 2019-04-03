@@ -530,6 +530,7 @@
         para.append("id", this.id);
         para.set("production",this.form.production);
         para.set("portraitUrl",this.portraitUrl);
+        para.set("equipped_weapon",this.form.equipped_weapon.join(","));
 
         para.set("levelFive.weapon",this.form.levelFive.weapon);
         para.set("levelFive.sup",this.form.levelFive.sup);
