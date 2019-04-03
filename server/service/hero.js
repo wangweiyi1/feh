@@ -16,6 +16,7 @@ module.exports.updateHero = (params, cb) => {
   let data = {
     portrait:params.portraitUrl,
     name: params.name,
+    equipped_weapon: params.equipped_weapon,
     description: params.description,
     production: params.production,
     weapon: params.weapon,

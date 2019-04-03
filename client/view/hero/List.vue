@@ -32,7 +32,7 @@
             <img :src="'/static/img/icon/'+scope.row.weapon+'.png'" class="icon" alt="">
           </template>
         </el-table-column>
-        <el-table-column prop="move" label="移动类型">
+        <el-table-column prop="move" label="移动类型"> 
           <template slot-scope="scope">
             <img :src="'/static/img/icon/'+scope.row.move+'.png'" class="icon" alt="">
           </template>

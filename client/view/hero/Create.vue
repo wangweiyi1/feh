@@ -56,6 +56,10 @@
             </template>
           </el-radio-group>
         </el-form-item>
+        <el-form-item label="可装备的专武">
+          <el-transfer filterable v-model="form.equipped_weapon" :data="exclusive_weapon">
+          </el-transfer>
+        </el-form-item>
         <el-form-item label="是否是真五">
           <el-radio-group v-model="form.top">
             <el-radio :label="true" name="top">是</el-radio>
@@ -350,8 +354,6 @@
                 </el-col>
               </el-row>
             </el-tab-pane>
-
-
           </el-tabs>
         </el-form-item>
 
@@ -395,6 +397,7 @@
         productionList: [],
         skillList: [],
         weaponList:[],
+        exclusive_weapon:[],
         characterList: [
           {key: "hp", value: "HP"},
           {key: "atk", value: "攻击"},
@@ -416,6 +419,7 @@
           move: "walk",
           good_character: [],
           bad_character: [],
+          equipped_weapon:[],
           hasFour:false,
           hasThree:false,
           levelFive: {
@@ -586,7 +590,13 @@
         let para = new FormData();
         para.append("level", "true");
         getWeaponList(para).then(res => {
-          this.weaponList = res.data.data;
+          let data = res.data.data;
+          this.weaponList = data;
+          for(let i=0;i<data.length;i++){
+            if(data[i].exclusive){
+              this.exclusive_weapon.push({key:data[i].id,label:data[i].name});
+            }
+          }
         })
       },
     },
@@ -621,5 +631,8 @@
 <style>
   .hero-create-container .form-custom .el-col {
     margin-top: 15px;
+  }
+  .el-transfer-panel__filter.el-input{
+    width:auto;
   }
 </style>

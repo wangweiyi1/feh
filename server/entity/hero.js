@@ -18,6 +18,7 @@ const hero = db.define('hero', {
   top: {type: Sequelize.BOOLEAN},
   update: {type: Sequelize.BOOLEAN},
   special_hero: {type: Sequelize.BOOLEAN},
+  equipped_weapon: {type: Sequelize.STRING},
   good_character: {type: Sequelize.STRING},
   bad_character: {type: Sequelize.STRING},
 }, {
