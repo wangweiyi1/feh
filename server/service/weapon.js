@@ -4,11 +4,11 @@ const util = require('../util/util');
 module.exports.getWeaponListLimit = (params,cb) => {
   let condition = {};
   let where = {};
-  // if(params.text && params.text != ""){
-  //   where.name = {
-  //     $like:"%" + params.text + "%"
-  //   }
-  // }
+  if(params.text && params.text != ""){
+    where.name = {
+      $like:"%" + params.text + "%"
+    }
+  }
   // if(params.position && params.position != ""){
   //   if(params.position == "seal"){
   //     where.build = true;

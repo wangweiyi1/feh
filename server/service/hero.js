@@ -3,6 +3,9 @@ const attributeEntity = require('../entity/attribute');
 const heroAttributeEntity = require('../entity/hero_attribute');
 const util = require('../util/util');
 
+heroEntity.hero.belongsToMany(attributeEntity.attribute, { through: heroAttributeEntity.hero_attribute, foreignKey: 'hero_id' });
+attributeEntity.attribute.belongsToMany(heroEntity.hero, { through: heroAttributeEntity.hero_attribute, foreignKey: 'attribute_id' });
+
 module.exports.createHero = (cb) => {
   return heroEntity.hero.create({update:false}).then((results) => {
     cb(results);
@@ -112,6 +115,18 @@ module.exports.deleteHeroById = (id, cb) => {
   });
 };
 
+module.exports.queryHeroById = (params,cb) => {
+  let condition = {};
+  condition.include = [
+    attributeEntity.attribute
+  ];
+  return heroEntity.hero.findById(params.id,condition).then((results)=>{
+    cb(results);
+  }).catch((error)=>{
+    cb([],"查询失败");
+  });
+};
+
 module.exports.getHeroListLimit = (params,cb) => {
   let condition = {};
   let where = {};
@@ -125,10 +140,13 @@ module.exports.getHeroListLimit = (params,cb) => {
     ['id', 'DESC'],
   ];
   condition.where = where;
+  condition.include = [
+    attributeEntity.attribute
+  ];
   if(params.pageSize && params.currentPage){
     condition.limit = Number(params.pageSize);
     condition.offset = (params.currentPage - 1) * params.pageSize;
-    return heroEntity.hero.findAndCount(condition).then((results)=>{
+    return heroEntity.hero.findAndCountAll(condition).then((results)=>{
       cb(results);
     }).catch((error)=>{
       cb([],"查询失败");

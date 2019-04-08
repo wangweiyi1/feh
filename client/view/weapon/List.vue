@@ -2,6 +2,10 @@
     <div>
       <el-card>
         <el-button @click="linkCreateWeapon" size="mini">新建武器</el-button>
+        <el-row style="text-align: right;">
+          <el-input v-model="condition.text" @input="updateCondition" size="mini" placeholder="搜索"
+                    prefix-icon="el-icon-search"></el-input>
+        </el-row>
         <el-table :data="weaponList" style="width: 100%" v-loading="loading.table">
           <el-table-column prop="name" label="技能">
           </el-table-column>
@@ -37,6 +41,9 @@
     data() {
       return {
         weaponList: [],
+        condition:{
+          text:""
+        },
         table:{
           total:0,
           pageSize:10,
@@ -71,6 +78,9 @@
           });
         });
       },
+      updateCondition(){
+        this.getWeaponList();
+      },
       updateWeapon(id){
         this.$router.push({ path: '/weapon/create',query:{id:id} });
       },
@@ -81,6 +91,7 @@
         let para = new FormData();
         para.append("currentPage",this.table.currentPage);
         para.append("pageSize",this.table.pageSize);
+        para.append("text",this.condition.text);
         this.loading.table = true;
         getWeaponList(para).then(res => {
           console.log(res.data.data);
