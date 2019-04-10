@@ -60,7 +60,7 @@
 </template>
 
 <script>
-  import {getHeroList, deleteSkill} from '@/api/api'
+  import {getHeroListLimit,getHeroList, deleteSkill} from '@/api/api'
 
   export default {
     data() {
@@ -123,7 +123,7 @@
         para.append("position", this.condition.position);
         para.append("text", this.condition.text);
         this.loading.table = true;
-        getHeroList(para).then(res => {
+        getHeroListLimit(para).then(res => {
           console.log(res);
           this.loading.table = false;
           if (res.data.status) {
