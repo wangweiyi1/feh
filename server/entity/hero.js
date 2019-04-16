@@ -73,7 +73,7 @@ const hero_attribute = db.define('hero_attribute', {
   freezeTableName: true,
 });
 
-hero.hasOne(hero_attribute,{foreignKey: 'hero_id'});
+hero.hasMany(hero_attribute,{foreignKey: 'hero_id'});
 hero_attribute.belongsTo(hero,{foreignKey: 'hero_id'});
 
 // hero.belongsToMany(attribute, { as: 'hero', through: hero_attribute, foreignKey: 'hero_id' });

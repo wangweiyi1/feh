@@ -201,7 +201,14 @@ module.exports.getHeroInfoList = (params,cb) => {
 module.exports.queryHeroById = (params,cb) => {
   let condition = {};
   condition.include = [
-    attributeEntity.attribute
+    {
+      //想要加载的模型
+      model:heroAttributeEntity.hero_attribute,
+      //进一步嵌套
+      include:[{
+        model:attributeEntity.attribute,
+      }],
+    }
   ];
   return heroEntity.hero.findById(params.id,condition).then((results)=>{
     cb(results);
@@ -249,9 +256,16 @@ module.exports.getHeroList = (params,cb) => {
     ['id', 'DESC'],
   ];
   condition.where = where;
-  // condition.include = [
-  //   attributeEntity.attribute
-  // ];
+  condition.include = [
+    {
+      //想要加载的模型
+      model:heroAttributeEntity.hero_attribute,
+      //进一步嵌套
+      include:[{
+        model:attributeEntity.attribute,
+      }],
+    }
+  ];
   return heroEntity.hero.findAll(condition).then((results)=>{
     cb(results);
   }).catch((error)=>{
