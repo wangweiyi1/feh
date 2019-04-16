@@ -242,13 +242,16 @@ module.exports.getHeroList = (params,cb) => {
       $like:"%" + params.text + "%"
     }
   }
+  if(params.top){
+    where.top = (params.top == "true") ? true : false;;
+  }
   condition.order = [
     ['id', 'DESC'],
   ];
   condition.where = where;
-  condition.include = [
-    attributeEntity.attribute
-  ];
+  // condition.include = [
+  //   attributeEntity.attribute
+  // ];
   return heroEntity.hero.findAll(condition).then((results)=>{
     cb(results);
   }).catch((error)=>{

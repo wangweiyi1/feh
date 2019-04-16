@@ -624,6 +624,7 @@
         getHeroInfo(para).then(res => {
           this.loading = false;
           let Data = res.data;
+          console.log(res);
           if(Data.status){
             this.imageUrl = 'http://39.98.79.79'+Data.data[0].portrait;
             this.form.name = Data.data[0].name;
