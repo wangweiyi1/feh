@@ -23,6 +23,7 @@ export const queryBaseWeapon = params => axios.post(`${base}/weapon/queryBaseWea
 export const uploadPortrait = params => axios.post(`${base}/hero/uploadPortrait`, params);
 export const createHero = params => axios.post(`${base}/hero/createHero`, params);
 export const updateHero = params => axios.post(`${base}/hero/updateHero`, params);
+export const getHeroInfo = params => axios.post(`${base}/hero/getHeroInfo`, params);
 export const deleteHeroById = params => axios.post(`${base}/hero/deleteHeroById`, params);
 export const getHeroList = params => axios.post(`${base}/hero/getHeroList`, params);
 export const getHeroListLimit = params => axios.post(`${base}/hero/getHeroListLimit`, params);

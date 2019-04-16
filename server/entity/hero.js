@@ -1,7 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../connection/db');
 
-
 const hero = db.define('hero', {
   id: {
     type: Sequelize.INTEGER,
@@ -14,6 +13,7 @@ const hero = db.define('hero', {
   production: {type: Sequelize.STRING},
   weapon: {type: Sequelize.STRING},
   move: {type: Sequelize.STRING},
+  legend: {type: Sequelize.BOOLEAN},
   limit: {type: Sequelize.BOOLEAN},
   top: {type: Sequelize.BOOLEAN},
   update: {type: Sequelize.BOOLEAN},
@@ -73,8 +73,11 @@ const hero_attribute = db.define('hero_attribute', {
   freezeTableName: true,
 });
 
-hero.belongsToMany(attribute, { as: 'hero', through: hero_attribute, foreignKey: 'hero_id' });
-attribute.belongsToMany(hero, { as: 'attribute', through: hero_attribute, foreignKey: 'attribute_id' });
+hero.hasOne(hero_attribute,{foreignKey: 'hero_id'});
+hero_attribute.belongsTo(hero,{foreignKey: 'hero_id'});
+
+// hero.belongsToMany(attribute, { as: 'hero', through: hero_attribute, foreignKey: 'hero_id' });
+// attribute.belongsToMany(hero, { as: 'attribute', through: hero_attribute, foreignKey: 'attribute_id' });
 
 module.exports.hero = hero;
 module.exports.attribute = attribute;

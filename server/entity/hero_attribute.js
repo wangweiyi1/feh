@@ -1,9 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../connection/db');
 
-const heroEntity = require('./hero');
-const attributeEntity = require('./attribute');
-
 const hero_attribute = db.define('hero_attribute', {
   id: {
     type: Sequelize.INTEGER,
