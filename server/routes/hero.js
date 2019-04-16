@@ -44,6 +44,17 @@ router.post('/createHero', function (req, res, next) {
     }
   })
 });
+//获取某个英雄的信息
+router.post('/getHeroInfo',multipartMiddleware, function (req, res) {
+  res.set('Access-Control-Allow-Origin', '*');
+  heroService.getHeroInfoList(req.body,(results,error)=>{
+    if(error){
+      res.status(500).json({"status":false,"msg":error,"data":[]});
+    }else{
+      res.status(200).json({"status":true,"msg":"success","data":results});
+    }
+  })
+});
 
 router.post('/getHeroList',multipartMiddleware, function (req, res, next) {
   res.set('Access-Control-Allow-Origin', '*');

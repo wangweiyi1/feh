@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../connection/db');
-
+const heroAttributeEntity = require('../entity/hero_attribute');
 
 const attribute = db.define('attribute', {
   id: {
@@ -30,5 +30,8 @@ const attribute = db.define('attribute', {
   // 如果指定的表名称本就是复数形式则不变
   freezeTableName: true,
 });
+
+attribute.hasOne(heroAttributeEntity.hero_attribute,{foreignKey: 'attribute_id'});
+heroAttributeEntity.hero_attribute.belongsTo(attribute,{foreignKey: 'attribute_id'});
 
 module.exports.attribute = attribute;
