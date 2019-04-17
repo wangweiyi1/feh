@@ -5,7 +5,7 @@
         <el-form-item label="头像">
           <el-upload
             class="avatar-uploader"
-            action="http://39.98.79.79:80/hero/uploadPortrait"
+            action="https://www.fehk-wiki.cn/hero/uploadPortrait"
             :show-file-list="false" name="file" :data="fileData"
             :on-success="handleAvatarSuccess">
             <img v-if="imageUrl" :src="imageUrl" name="portrait" class="avatar">
@@ -529,6 +529,7 @@
       updateHero() {
         let para = new FormData(this.$refs.form.$el);
         para.append("id", this.id);
+        para.append("isUpdate",this.update);
         para.set("production",this.form.production);
         para.set("legend",this.form.legend);
         para.set("portraitUrl",this.portraitUrl);
@@ -624,6 +625,7 @@
         getHeroInfo(para).then(res => {
           this.loading = false;
           let Data = res.data;
+          console.log(res);
           if(Data.status){
             this.imageUrl = 'http://39.98.79.79'+Data.data[0].portrait;
             this.form.name = Data.data[0].name;

@@ -28,4 +28,10 @@ export const deleteHeroById = params => axios.post(`${base}/hero/deleteHeroById`
 export const getHeroList = params => axios.post(`${base}/hero/getHeroList`, params);
 export const getHeroListLimit = params => axios.post(`${base}/hero/getHeroListLimit`, params);
 
+export const createCard = params => axios.post(`${base}/card/createCard`, params);
+export const updateCard = params => axios.post(`${base}/card/updateCard`, params);
+export const getCardList = params => axios.post(`${base}/card/getCardList`, params);
+export const deleteCard = params => axios.post(`${base}/card/deleteCard`, params);
+export const queryCardById = params => axios.post(`${base}/card/queryCardById`, params);
+
 export const queryAllProduction = params => axios.post(`${base}/common/queryAllProduction`, params);

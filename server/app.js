@@ -15,6 +15,7 @@ app.use('/skill', require('./routes/skill'));
 app.use('/weapon', require('./routes/weapon'));
 app.use('/hero', require('./routes/hero'));
 app.use('/common', require('./routes/common'));
+app.use('/card', require('./routes/card'));
 
 app.all("*", function(req, res, next) {
   let origin = req.headers.origin;

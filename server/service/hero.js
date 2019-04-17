@@ -36,7 +36,7 @@ module.exports.updateHero = (params, cb) => {
   if(params.bad_character != undefined){
     data.bad_character = typeof params.bad_character == "string" ? params.bad_character : params.bad_character.join(",");
   }
-  if(params.id){
+  if(params.isUpdate == "true"){
     return heroEntity.hero.update(data,{where:{id:params.id}}).then(async (results)=>{
       result.hero = results;
       result.attribute_id  = await this.queryHeroAttributeID(Number(params.id));
@@ -61,7 +61,7 @@ module.exports.updateHero = (params, cb) => {
       console.log(error);
     });
   }else{
-    return heroEntity.hero.create(data).then(async (results)=>{
+    return heroEntity.hero.update(data,{where:{id:params.id}}).then(async (results)=>{
       result.hero = results;
       params.levelFive.level = 5;
       result.attribute = {};
@@ -201,7 +201,14 @@ module.exports.getHeroInfoList = (params,cb) => {
 module.exports.queryHeroById = (params,cb) => {
   let condition = {};
   condition.include = [
-    attributeEntity.attribute
+    {
+      //想要加载的模型
+      model:heroAttributeEntity.hero_attribute,
+      //进一步嵌套
+      include:[{
+        model:attributeEntity.attribute,
+      }],
+    }
   ];
   return heroEntity.hero.findById(params.id,condition).then((results)=>{
     cb(results);
@@ -242,12 +249,22 @@ module.exports.getHeroList = (params,cb) => {
       $like:"%" + params.text + "%"
     }
   }
+  if(params.top){
+    where.top = (params.top == "true") ? true : false;
+  }
   condition.order = [
     ['id', 'DESC'],
   ];
   condition.where = where;
   condition.include = [
-    attributeEntity.attribute
+    {
+      //想要加载的模型
+      model:heroAttributeEntity.hero_attribute,
+      //进一步嵌套
+      include:[{
+        model:attributeEntity.attribute,
+      }],
+    }
   ];
   return heroEntity.hero.findAll(condition).then((results)=>{
     cb(results);
