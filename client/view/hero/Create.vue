@@ -5,7 +5,7 @@
         <el-form-item label="头像">
           <el-upload
             class="avatar-uploader"
-            action="http://39.98.79.79:80/hero/uploadPortrait"
+            action="https://www.fehk-wiki.cn/hero/uploadPortrait"
             :show-file-list="false" name="file" :data="fileData"
             :on-success="handleAvatarSuccess">
             <img v-if="imageUrl" :src="imageUrl" name="portrait" class="avatar">

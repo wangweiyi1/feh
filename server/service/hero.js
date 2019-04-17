@@ -250,7 +250,7 @@ module.exports.getHeroList = (params,cb) => {
     }
   }
   if(params.top){
-    where.top = (params.top == "true") ? true : false;;
+    where.top = (params.top == "true") ? true : false;
   }
   condition.order = [
     ['id', 'DESC'],
