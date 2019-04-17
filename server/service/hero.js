@@ -36,7 +36,7 @@ module.exports.updateHero = (params, cb) => {
   if(params.bad_character != undefined){
     data.bad_character = typeof params.bad_character == "string" ? params.bad_character : params.bad_character.join(",");
   }
-  if(params.id){
+  if(params.isUpdate == "true"){
     return heroEntity.hero.update(data,{where:{id:params.id}}).then(async (results)=>{
       result.hero = results;
       result.attribute_id  = await this.queryHeroAttributeID(Number(params.id));
@@ -61,7 +61,7 @@ module.exports.updateHero = (params, cb) => {
       console.log(error);
     });
   }else{
-    return heroEntity.hero.create(data).then(async (results)=>{
+    return heroEntity.hero.update(data,{where:{id:params.id}}).then(async (results)=>{
       result.hero = results;
       params.levelFive.level = 5;
       result.attribute = {};

@@ -529,6 +529,7 @@
       updateHero() {
         let para = new FormData(this.$refs.form.$el);
         para.append("id", this.id);
+        para.append("isUpdate",this.update);
         para.set("production",this.form.production);
         para.set("legend",this.form.legend);
         para.set("portraitUrl",this.portraitUrl);
