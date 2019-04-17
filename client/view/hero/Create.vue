@@ -5,7 +5,7 @@
         <el-form-item label="头像">
           <el-upload
             class="avatar-uploader"
-            action="https://www.fehk-wiki.cn/hero/uploadPortrait"
+            action="http://39.98.79.79:80/hero/uploadPortrait"
             :show-file-list="false" name="file" :data="fileData"
             :on-success="handleAvatarSuccess">
             <img v-if="imageUrl" :src="imageUrl" name="portrait" class="avatar">
@@ -424,6 +424,7 @@
           hasFour:false,
           hasThree:false,
           levelFive: {
+            attribute_id:'',
             level1_hp: 0,
             level1_atk: 0,
             level1_spd: 0,
@@ -442,6 +443,7 @@
             c: "",
           },
           levelFour: {
+            attribute_id:'',
             level1_hp: 0,
             level1_atk: 0,
             level1_spd: 0,
@@ -460,6 +462,7 @@
             c: "",
           },
           levelThree: {
+            attribute_id:'',
             level1_hp: 0,
             level1_atk: 0,
             level1_spd: 0,
@@ -541,7 +544,15 @@
         para.set("levelFive.a",this.form.levelFive.a);
         para.set("levelFive.b",this.form.levelFive.b);
         para.set("levelFive.c",this.form.levelFive.c);
-
+        if(this.form.levelFive.attribute_id){
+          para.set("levelFive.attribute_id",this.form.levelFive.attribute_id);
+        }
+        if(this.form.levelFour.attribute_id){
+          para.set("levelFour.attribute_id",this.form.levelFour.attribute_id);
+        }
+        if(this.form.levelThree.attribute_id){
+          para.set("levelThree.attribute_id",this.form.levelThree.attribute_id);
+        }
         if(this.form.hasFour){
           para.set("hasFour",this.form.hasFour);
           para.set("levelFour.weapon",this.form.levelFour.weapon);
@@ -655,58 +666,63 @@
             }else{
               this.form.equipped_weapon = [];
             }
-            //判断是几星
-            if(Data.data[0].hero_attribute.level == 5){
-              this.activeName = 'first';
-              this.form.levelFive.level1_hp = Data.data[0].hero_attribute.attribute.hp_1;
-              this.form.levelFive.level1_atk = Data.data[0].hero_attribute.attribute.atk_1;
-              this.form.levelFive.level1_spd = Data.data[0].hero_attribute.attribute.spd_1;
-              this.form.levelFive.level1_res = Data.data[0].hero_attribute.attribute.res_1;
-              this.form.levelFive.level40_hp = Data.data[0].hero_attribute.attribute.hp_40;
-              this.form.levelFive.level40_atk = Data.data[0].hero_attribute.attribute.atk_40;
-              this.form.levelFive.level40_spd = Data.data[0].hero_attribute.attribute.spd_40;
-              this.form.levelFive.level40_res = Data.data[0].hero_attribute.attribute.res_40;
-              this.form.levelFive.weapon = Number(Data.data[0].hero_attribute.attribute.weapon);
-              this.form.levelFive.sup = Number(Data.data[0].hero_attribute.attribute['sup']);
-              this.form.levelFive.kill = Number(Data.data[0].hero_attribute.attribute['kill']);
-              this.form.levelFive.a = Number(Data.data[0].hero_attribute.attribute['a']);
-              this.form.levelFive.b = Number(Data.data[0].hero_attribute.attribute['b']);
-              this.form.levelFive.c = Number(Data.data[0].hero_attribute.attribute['c']);
-            }else if(Data.data[0].hero_attribute.level == 4){
-              this.activeName = 'second';
-              if(Data.data[0].hero_attribute.hasFour){
-                this.form.levelFour.level1_hp = Data.data[0].hero_attribute.attribute.hp_1;
-                this.form.levelFour.level1_atk = Data.data[0].hero_attribute.attribute.atk_1;
-                this.form.levelFour.level1_spd = Data.data[0].hero_attribute.attribute.spd_1;
-                this.form.levelFour.level1_res = Data.data[0].hero_attribute.attribute.res_1;
-                this.form.levelFour.level40_hp = Data.data[0].hero_attribute.attribute.hp_40;
-                this.form.levelFour.level40_atk = Data.data[0].hero_attribute.attribute.atk_40;
-                this.form.levelFour.level40_spd = Data.data[0].hero_attribute.attribute.spd_40;
-                this.form.levelFour.level40_res = Data.data[0].hero_attribute.attribute.res_40;
-                this.form.levelFour.weapon = Number(Data.data[0].hero_attribute.attribute.weapon);
-                this.form.levelFour.sup = Number(Data.data[0].hero_attribute.attribute['sup']);
-                this.form.levelFour.kill = Number(Data.data[0].hero_attribute.attribute['kill']);
-                this.form.levelFour.a = Number(Data.data[0].hero_attribute.attribute['a']);
-                this.form.levelFour.b = Number(Data.data[0].hero_attribute.attribute['b']);
-                this.form.levelFour.c = Number(Data.data[0].hero_attribute.attribute['c']);
-              }
-            }else if(Data.data[0].hero_attribute.level == 3){
-              this.activeName = 'third';
-              if(Data.data[0].hero_attribute.hasThree){
-                this.form.levelThree.level1_hp = Data.data[0].hero_attribute.attribute.hp_1;
-                this.form.levelThree.level1_atk = Data.data[0].hero_attribute.attribute.atk_1;
-                this.form.levelThree.level1_spd = Data.data[0].hero_attribute.attribute.spd_1;
-                this.form.levelThree.level1_res = Data.data[0].hero_attribute.attribute.res_1;
-                this.form.levelThree.level40_hp = Data.data[0].hero_attribute.attribute.hp_40;
-                this.form.levelThree.level40_atk = Data.data[0].hero_attribute.attribute.atk_40;
-                this.form.levelThree.level40_spd = Data.data[0].hero_attribute.attribute.spd_40;
-                this.form.levelThree.level40_res = Data.data[0].hero_attribute.attribute.res_40;
-                this.form.levelThree.weapon = Number(Data.data[0].hero_attribute.attribute.weapon);
-                this.form.levelThree.sup = Number(Data.data[0].hero_attribute.attribute['sup']);
-                this.form.levelThree.kill = Number(Data.data[0].hero_attribute.attribute['kill']);
-                this.form.levelThree.a = Number(Data.data[0].hero_attribute.attribute['a']);
-                this.form.levelThree.b = Number(Data.data[0].hero_attribute.attribute['b']);
-                this.form.levelThree.c = Number(Data.data[0].hero_attribute.attribute['c']);
+            this.activeName = 'first';
+            for(let i=0;i<Data.data[0].hero_attributes.length;i++){
+              if(Data.data[0].hero_attributes[i].level){
+                if(Data.data[0].hero_attributes[i].level == 5){
+                  //五星
+                  this.form.levelFive.attribute_id = Data.data[0].hero_attributes[i].attribute_id;
+                  this.form.levelFive.level1_hp = Data.data[0].hero_attributes[i].attribute.hp_1;
+                  this.form.levelFive.level1_atk = Data.data[0].hero_attributes[i].attribute.atk_1;
+                  this.form.levelFive.level1_spd = Data.data[0].hero_attributes[i].attribute.spd_1;
+                  this.form.levelFive.level1_res = Data.data[0].hero_attributes[i].attribute.res_1;
+                  this.form.levelFive.level40_hp = Data.data[0].hero_attributes[i].attribute.hp_40;
+                  this.form.levelFive.level40_atk = Data.data[0].hero_attributes[i].attribute.atk_40;
+                  this.form.levelFive.level40_spd = Data.data[0].hero_attributes[i].attribute.spd_40;
+                  this.form.levelFive.level40_res = Data.data[0].hero_attributes[i].attribute.res_40;
+                  this.form.levelFive.weapon = Number(Data.data[0].hero_attributes[i].attribute.weapon);
+                  this.form.levelFive.sup = Number(Data.data[0].hero_attributes[i].attribute['sup']);
+                  this.form.levelFive.kill = Number(Data.data[0].hero_attributes[i].attribute['kill']);
+                  this.form.levelFive.a = Number(Data.data[0].hero_attributes[i].attribute['a']);
+                  this.form.levelFive.b = Number(Data.data[0].hero_attributes[i].attribute['b']);
+                  this.form.levelFive.c = Number(Data.data[0].hero_attributes[i].attribute['c']);
+                }else if(Data.data[0].hero_attributes[i].level == 4){
+                  //四星
+                  this.form.hasFour = true;
+                  this.form.levelFour.attribute_id = Data.data[0].hero_attributes[i].attribute_id;
+                  this.form.levelFour.level1_hp = Data.data[0].hero_attributes[i].attribute.hp_1;
+                  this.form.levelFour.level1_atk = Data.data[0].hero_attributes[i].attribute.atk_1;
+                  this.form.levelFour.level1_spd = Data.data[0].hero_attributes[i].attribute.spd_1;
+                  this.form.levelFour.level1_res = Data.data[0].hero_attributes[i].attribute.res_1;
+                  this.form.levelFour.level40_hp = Data.data[0].hero_attributes[i].attribute.hp_40;
+                  this.form.levelFour.level40_atk = Data.data[0].hero_attributes[i].attribute.atk_40;
+                  this.form.levelFour.level40_spd = Data.data[0].hero_attributes[i].attribute.spd_40;
+                  this.form.levelFour.level40_res = Data.data[0].hero_attributes[i].attribute.res_40;
+                  this.form.levelFour.weapon = Number(Data.data[0].hero_attributes[i].attribute.weapon);
+                  this.form.levelFour.sup = Number(Data.data[0].hero_attributes[i].attribute['sup']);
+                  this.form.levelFour.kill = Number(Data.data[0].hero_attributes[i].attribute['kill']);
+                  this.form.levelFour.a = Number(Data.data[0].hero_attributes[i].attribute['a']);
+                  this.form.levelFour.b = Number(Data.data[0].hero_attributes[i].attribute['b']);
+                  this.form.levelFour.c = Number(Data.data[0].hero_attributes[i].attribute['c']);
+                }else if(Data.data[0].hero_attributes[i].level == 3){
+                  //三星
+                  this.form.hasThree = true;
+                  this.form.levelThree.attribute_id = Data.data[0].hero_attributes[i].attribute_id;
+                  this.form.levelThree.level1_hp = Data.data[0].hero_attributes[i].attribute.hp_1;
+                  this.form.levelThree.level1_atk = Data.data[0].hero_attributes[i].attribute.atk_1;
+                  this.form.levelThree.level1_spd = Data.data[0].hero_attributes[i].attribute.spd_1;
+                  this.form.levelThree.level1_res = Data.data[0].hero_attributes[i].attribute.res_1;
+                  this.form.levelThree.level40_hp = Data.data[0].hero_attributes[i].attribute.hp_40;
+                  this.form.levelThree.level40_atk = Data.data[0].hero_attributes[i].attribute.atk_40;
+                  this.form.levelThree.level40_spd = Data.data[0].hero_attributes[i].attribute.spd_40;
+                  this.form.levelThree.level40_res = Data.data[0].hero_attributes[i].attribute.res_40;
+                  this.form.levelThree.weapon = Number(Data.data[0].hero_attributes[i].attribute.weapon);
+                  this.form.levelThree.sup = Number(Data.data[0].hero_attributes[i].attribute['sup']);
+                  this.form.levelThree.kill = Number(Data.data[0].hero_attributes[i].attribute['kill']);
+                  this.form.levelThree.a = Number(Data.data[0].hero_attributes[i].attribute['a']);
+                  this.form.levelThree.b = Number(Data.data[0].hero_attributes[i].attribute['b']);
+                  this.form.levelThree.c = Number(Data.data[0].hero_attributes[i].attribute['c']);
+                }
               }
             }
           }

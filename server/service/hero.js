@@ -39,21 +39,28 @@ module.exports.updateHero = (params, cb) => {
   if(params.isUpdate == "true"){
     return heroEntity.hero.update(data,{where:{id:params.id}}).then(async (results)=>{
       result.hero = results;
-      result.attribute_id  = await this.queryHeroAttributeID(Number(params.id));
-      await this.updateAttribute(params.levelFive,{where:{id:result.attribute_id[0].attribute_id}});
-      await this.updateHeroAttribute({
-        level:5,
-      },{where:{hero_id:Number(params.id)}});
+      //更新五星数据
+      this.updateAttribute(params.levelFive,{where:{id:params.levelFive.attribute_id}});
+      //更新四星数据
       if(params.hasFour){
-        await this.updateAttribute(params.levelFour,{where:{id:result.attribute_id[0].attribute_id}});
-        await this.updateHeroAttribute({
+        this.updateAttribute(params.levelFour,{where:{id:params.levelFour.attribute_id}});
+        this.updateHeroAttribute({
           level:4,
         },{where:{hero_id:Number(params.id)}});
+      }else{
+        this.updateHeroAttribute({
+          level:'',
+        },{where:{hero_id:Number(params.id)}});
       }
+      //更新三星数据
       if(params.hasThree){
-        await this.updateAttribute(params.levelThree,{where:{id:result.attribute_id[0].attribute_id}});
-        await this.updateHeroAttribute({
+        this.updateAttribute(params.levelThree,{where:{id:params.levelThree.attribute_id}});
+        this.updateHeroAttribute({
           level:3,
+        },{where:{hero_id:Number(params.id)}});
+      }else{
+        this.updateHeroAttribute({
+          level:'',
         },{where:{hero_id:Number(params.id)}});
       }
       cb(result);
@@ -137,7 +144,7 @@ module.exports.updateAttribute = (params, cb) => {
     b: params.b,
     c: params.c,
   };
-  return attributeEntity.attribute.update(data,{where:{id:params.id}});
+  return attributeEntity.attribute.update(data,{where:{id:params.attribute_id}});
 };
 
 module.exports.createHeroAttribute = (params) => {
@@ -189,8 +196,8 @@ module.exports.getHeroInfoList = (params,cb) => {
         model:attributeEntity.attribute,
       }],
     }],
-    order:[[heroAttributeEntity.hero_attribute, 'id', 'DESC']],
-    limit:1,
+    // order:[[heroAttributeEntity.hero_attribute, 'id', 'DESC']],
+    // limit:1,
   }).then((result) => {
     cb(result);
   }).catch(error => {
