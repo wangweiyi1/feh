@@ -162,45 +162,33 @@ module.exports.updateHeroAttribute = (params, cb) => {
   };
   return heroAttributeEntity.hero_attribute.update(data,{where:{hero_id:params.id}});
 };
-//删除信息
+
+// 假删除信息
 module.exports.deleteHeroById = (id, cb) => {
   var arr = [];
   return heroAttributeEntity.hero_attribute.findAll({where: {hero_id:id,}}).then(async (results)=>{
     for(let i=0;i<results.length;i++){
       arr.push(results[0].attribute_id)
     }
-    await this.deleteHeroAttribute(id);
-    await this.deleteHero(id);
-    await this.deleteAttribute(arr);
+    await this.removeHero(id);
+    await this.removeAttribute(arr);
     cb(results);
   }).catch((error) => {
     console.log(error);
   });
 };
-
 //删除hero对应数据
-module.exports.deleteHero = (id,cb) => {
-  return heroEntity.hero.destroy({
-    where: {
-      id:id,
-    },
-  })
+module.exports.removeHero = (id,cb) => {
+  let data = {
+    remove:1
+  };
+  return heroEntity.hero.update(data,{where:{id:id}})
 };
-//删除中间表数据
-module.exports.deleteHeroAttribute = (id,cb) => {
-  return heroAttributeEntity.hero_attribute.destroy({
-    where: {
-      hero_id:id,
-    },
-  })
-};
-//删除属性表对应数据
-module.exports.deleteAttribute = (id,cb) => {
-  return attributeEntity.attribute.destroy({
-    where: {
-      id:id,
-    },
-  })
+module.exports.removeAttribute = (id,cb) => {
+  let data = {
+    remove:1
+  };
+  return attributeEntity.attribute.update(data,{where:{id:id}});
 };
 
 module.exports.queryHeroAttributeID = (id,cb) => {
@@ -259,6 +247,7 @@ module.exports.getHeroListLimit = (params,cb) => {
   let condition = {};
   let where = {};
   where.update = true;
+  where.remove = null;
   if(params.text && params.text != ""){
     where.name = {
       $like:"%" + params.text + "%"
