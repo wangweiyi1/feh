@@ -176,21 +176,6 @@ module.exports.deleteHeroById = (id, cb) => {
   }).catch((error) => {
     console.log(error);
   });
-
-  // console.log(result.attribute_id);
-  // if(result.attribute_id != []){
-  //   for(let i=0;i<result.attribute_id.length;i++){
-  //     arr.push(result.attribute_id[i].attribute_id)
-  //   }
-  // }
-  // console.log(arr);
-  // return heroAttributeEntity.hero_attribute.destroy({where: {hero_id:id}}).then(async (results)=>{
-  //   // await this.deleteAttribute({where:{id:arr}});
-  //   // await this.deleteHero({where:{id:id}});
-  //   cb(results);
-  // }).catch((error) => {
-  //   console.log(error);
-  // });
 };
 
 //删除hero对应数据
