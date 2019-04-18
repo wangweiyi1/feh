@@ -162,13 +162,60 @@ module.exports.updateHeroAttribute = (params, cb) => {
   };
   return heroAttributeEntity.hero_attribute.update(data,{where:{hero_id:params.id}});
 };
-
+//删除信息
 module.exports.deleteHeroById = (id, cb) => {
-  return heroEntity.hero.destroy({where: {id: id}}).then((results) => {
+  var arr = [];
+  return heroAttributeEntity.hero_attribute.findAll({where: {hero_id:id,}}).then(async (results)=>{
+    for(let i=0;i<results.length;i++){
+      arr.push(results[0].attribute_id)
+    }
+    await this.deleteHeroAttribute(id);
+    await this.deleteHero(id);
+    await this.deleteAttribute(arr);
     cb(results);
   }).catch((error) => {
     console.log(error);
   });
+
+  // console.log(result.attribute_id);
+  // if(result.attribute_id != []){
+  //   for(let i=0;i<result.attribute_id.length;i++){
+  //     arr.push(result.attribute_id[i].attribute_id)
+  //   }
+  // }
+  // console.log(arr);
+  // return heroAttributeEntity.hero_attribute.destroy({where: {hero_id:id}}).then(async (results)=>{
+  //   // await this.deleteAttribute({where:{id:arr}});
+  //   // await this.deleteHero({where:{id:id}});
+  //   cb(results);
+  // }).catch((error) => {
+  //   console.log(error);
+  // });
+};
+
+//删除hero对应数据
+module.exports.deleteHero = (id,cb) => {
+  return heroEntity.hero.destroy({
+    where: {
+      id:id,
+    },
+  })
+};
+//删除中间表数据
+module.exports.deleteHeroAttribute = (id,cb) => {
+  return heroAttributeEntity.hero_attribute.destroy({
+    where: {
+      hero_id:id,
+    },
+  })
+};
+//删除属性表对应数据
+module.exports.deleteAttribute = (id,cb) => {
+  return attributeEntity.attribute.destroy({
+    where: {
+      id:id,
+    },
+  })
 };
 
 module.exports.queryHeroAttributeID = (id,cb) => {
@@ -176,7 +223,6 @@ module.exports.queryHeroAttributeID = (id,cb) => {
     where: {
       hero_id:id,
     },
-    limit:1,
   })
 };
 

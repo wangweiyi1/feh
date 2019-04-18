@@ -42,7 +42,7 @@
             <el-button type="primary" icon="el-icon-edit" circle size="mini"
                        @click="updateSkill(scope.row.id)"></el-button>
             <el-button type="danger" icon="el-icon-delete" circle size="mini"
-                       @click="deleteSkill(scope.row.id)"></el-button>
+                       @click="deleteHero(scope.row.id)"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -60,7 +60,7 @@
 </template>
 
 <script>
-  import {getHeroListLimit,getHeroList, deleteSkill} from '@/api/api'
+  import {getHeroListLimit,getHeroList, deleteSkill,deleteHeroById} from '@/api/api'
 
   export default {
     data() {
@@ -82,18 +82,18 @@
       }
     },
     methods: {
-      deleteSkill(id) {
-        this.$confirm('是否确认删除此技能?', '提示', {
+      deleteHero(id) {
+        this.$confirm('是否确认删除此英雄?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
           let para = new FormData();
           para.append("id", id);
-          deleteSkill(para).then(res => {
+          deleteHeroById(para).then(res => {
             if (res.data.status) {
-              this.getSkillList();
               this.$message.success(res.data.msg);
+              this.getHeroList();
             } else {
               this.$message.error(res.data.msg);
             }
