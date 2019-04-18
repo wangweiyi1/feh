@@ -21,6 +21,7 @@ const hero = db.define('hero', {
   equipped_weapon: {type: Sequelize.STRING},
   good_character: {type: Sequelize.STRING},
   bad_character: {type: Sequelize.STRING},
+  remove:{type: Sequelize.BOOLEAN}
 }, {
   // 如果为 true 则表的名称和 model 相同，即 user
   // 为 false MySQL创建的表名称会是复数 users
@@ -50,6 +51,7 @@ const attribute = db.define('attribute', {
   a: {type: Sequelize.INTEGER},
   b: {type: Sequelize.INTEGER},
   c: {type: Sequelize.INTEGER},
+
 }, {
   // 如果为 true 则表的名称和 model 相同，即 user
   // 为 false MySQL创建的表名称会是复数 users
