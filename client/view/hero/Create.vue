@@ -636,9 +636,9 @@
         getHeroInfo(para).then(res => {
           this.loading = false;
           let Data = res.data;
-          console.log(res);
           if(Data.status){
             this.imageUrl = 'http://39.98.79.79'+Data.data[0].portrait;
+            this.portraitUrl = Data.data[0].portrait;
             this.form.name = Data.data[0].name;
             this.form.description = Data.data[0].description;
             this.form.production = Number(Data.data[0].production);
@@ -662,7 +662,10 @@
             }
             //判断是否为null 获取可装备的专武
             if(Data.data[0].equipped_weapon != null){
-              this.form.equipped_weapon = Data.data[0].equipped_weapon.split(',');;
+              this.form.equipped_weapon = Data.data[0].equipped_weapon.split(',');
+              for(let i=0;i<this.form.equipped_weapon.length;i++){
+                this.form.equipped_weapon[i] = Number(this.form.equipped_weapon[i]);
+              }
             }else{
               this.form.equipped_weapon = [];
             }
