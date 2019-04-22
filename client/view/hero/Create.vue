@@ -690,10 +690,12 @@
                 this.form[level].level1_hp = attribute.hp_1;
                 this.form[level].level1_atk = attribute.atk_1;
                 this.form[level].level1_spd = attribute.spd_1;
+                this.form[level].level1_def = attribute.def_1;
                 this.form[level].level1_res = attribute.res_1;
                 this.form[level].level40_hp = attribute.hp_40;
                 this.form[level].level40_atk = attribute.atk_40;
                 this.form[level].level40_spd = attribute.spd_40;
+                this.form[level].level40_def = attribute.def_40;
                 this.form[level].level40_res = attribute.res_40;
                 this.form[level].weapon = attribute.weapon != '' ? Number(attribute.weapon) : attribute.weapon;
                 this.form[level].sup = attribute.sup != '' ? Number(attribute.sup) : attribute.sup;
