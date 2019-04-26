@@ -534,7 +534,7 @@
         para.append("id", this.id);
         para.append("isUpdate",this.update);
         para.set("production",this.form.production);
-        para.set("legend",this.form.legend);
+        // para.set("legend",this.form.legend);
         para.set("portraitUrl",this.portraitUrl);
         para.set("equipped_weapon",this.form.equipped_weapon.join(","));
 
@@ -637,6 +637,7 @@
           this.loading = false;
           let Data = res.data;
           if(Data.status){
+            console.log(Data.data[0]);
             this.imageUrl = 'http://39.98.79.79'+Data.data[0].portrait;
             this.portraitUrl = Data.data[0].portrait;
             this.form.name = Data.data[0].name;
