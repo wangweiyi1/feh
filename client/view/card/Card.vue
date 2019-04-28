@@ -33,7 +33,7 @@
         </el-pagination>
       </div>
 
-      <el-dialog title="新建卡池" :visible.sync="createDialog" width="50%">
+      <el-dialog :title="dialogTitle" :visible.sync="createDialog" width="50%">
         <el-form ref="form" :model="form" label-width="120px">
           <el-form-item label="卡池名称">
             <el-input v-model="form.name" name="name"></el-input>
@@ -79,6 +79,7 @@
         createDialog:false,
         up_role_date:[],
         tableData:[],
+        dialogTitle:"新建卡池",
         condition: {
           text: "",
         },
@@ -103,6 +104,25 @@
       }
     },
     methods:{
+      updateCard(id){
+        let para = new FormData();
+        para.append("id",id);
+        queryCardById(para).then(res=>{
+          let data = res.data.data;
+          let up_role = data.up_role.split(",");
+          for(let i=0;i<up_role.length;i++){
+            up_role[i] = Number(up_role[i]);
+          }
+          this.form = {
+            name: data.name,
+            up_rate: data.up_rate,
+            hasAll: data.hasAll,
+            crooked_rate: data.crooked_rate,
+            up_role: up_role,
+          };
+          this.createDialog = true;
+        })
+      },
       subCard(){
         this.createCard();
       },
@@ -128,7 +148,6 @@
         para.append("text", this.condition.text);
         this.loading.table = true;
         getCardList(para).then(res => {
-          console.log(res.data.data);
           this.loading.table = false;
           if (res.data.status) {
             this.table.total = res.data.data.count;
