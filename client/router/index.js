@@ -8,6 +8,7 @@ import SkillCreate from '@/view/skill/Create'
 import WeaponList from '@/view/weapon/List'
 import WeaponCreate from '@/view/weapon/Create'
 import Card from '@/view/card/Card'
+import Count from '@/view/count/count'
 
 Vue.use(Router);
 
@@ -59,6 +60,11 @@ export default new Router({
           path: '/card',
           name: 'card',
           component: Card,
+        },
+        {
+          path: '/count',
+          name: 'count',
+          component: Count,
         },
       ]
     }

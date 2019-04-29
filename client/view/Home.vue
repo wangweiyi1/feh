@@ -24,6 +24,10 @@
             <i class="el-icon-tickets"></i>
             <span slot="title">模拟抽卡</span>
           </el-menu-item>
+          <el-menu-item index="/count">
+            <i class="el-icon-tickets"></i>
+            <span slot="title">神秘倒计时</span>
+          </el-menu-item>
         </el-menu>
       </el-aside>
 

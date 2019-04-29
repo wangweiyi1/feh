@@ -1,0 +1,40 @@
+<template>
+    <el-card>
+      <el-date-picker
+        v-model="date"
+        type="datetime" size="small"
+        placeholder="选择日期时间">
+      </el-date-picker>
+      <el-button @click="sub" size="small">计算</el-button>
+      <div v-show="result != ''">
+        {{result}}
+      </div>
+    </el-card>
+</template>
+
+<script>
+  export default {
+    data(){
+      return {
+        date: "",
+        result:"",
+      }
+    },
+    methods:{
+      sub(){
+        if(this.date == ""){
+          this.$message.error("请选择时间");
+          return;
+        }
+        let now = new Date().getTime();
+        let target = new Date(this.date).getTime();
+        let result = Number((((target - now) / 1000) / 60).toFixed(0)) + 1;
+        this.result = result;
+      }
+    }
+  }
+</script>
+
+<style scoped>
+
+</style>
