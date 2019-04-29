@@ -20,6 +20,11 @@
         result:"",
       }
     },
+    mounted(){
+      let date = new Date();
+      this.date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " 15:00:00";
+      console.log(this.date)
+    },
     methods:{
       sub(){
         if(this.date == ""){
