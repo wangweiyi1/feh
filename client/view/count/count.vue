@@ -33,7 +33,7 @@
         }
         let now = new Date().getTime();
         let target = new Date(this.date).getTime();
-        let result = Number((((target - now) / 1000) / 60).toFixed(0)) + 1;
+        let result = Math.ceil(Number((((target - now) / 1000) / 60)));
         this.result = result;
       }
     }
