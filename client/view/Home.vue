@@ -26,7 +26,7 @@
           </el-menu-item>
           <el-menu-item index="/count">
             <i class="el-icon-tickets"></i>
-            <span slot="title">神秘倒计时</span>
+            <span slot="title">神秘数字</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
@@ -57,7 +57,7 @@
     name: 'HelloWorld',
     data () {
       return {
-        menuActive:"/gym/list",
+        menuActive:"",
         user:{},
         authority:"",
       }
