@@ -17,7 +17,7 @@
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button type="primary" icon="el-icon-edit" circle size="mini"
-                       @click="updateCard(scope.row.id)"></el-button>
+                       @click="updateDialog(scope.row.id)"></el-button>
             <el-button type="danger" icon="el-icon-delete" circle size="mini"
                        @click="deleteCard(scope.row.id)"></el-button>
           </template>
@@ -80,6 +80,8 @@
         up_role_date:[],
         tableData:[],
         dialogTitle:"新建卡池",
+        update:false,
+        updateId:0,
         condition: {
           text: "",
         },
@@ -104,7 +106,30 @@
       }
     },
     methods:{
-      updateCard(id){
+      deleteCard(id){
+        this.$confirm('是否确认删除此卡池？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          let para = new FormData();
+          para.append("id",id);
+          deleteCard(para).then(res=>{
+            if (res.data.status) {
+              this.getCardList();
+              this.$message.success(res.data.msg);
+            } else {
+              this.$message.error(res.data.msg);
+            }
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+      },
+      updateDialog(id){
         let para = new FormData();
         para.append("id",id);
         queryCardById(para).then(res=>{
@@ -120,11 +145,32 @@
             crooked_rate: data.crooked_rate,
             up_role: up_role,
           };
+          this.dialogTitle = "修改卡池";
           this.createDialog = true;
-        })
+          this.update = true;
+          this.updateId = id;
+        });
+      },
+      updateCard(){
+        let para = new FormData(this.$refs.form.$el);
+        para.append("id",this.updateId);
+        para.set("up_role",this.form.up_role.join(","));
+        updateCard(para).then(res=>{
+          if (res.data.status) {
+            this.$message.success(res.data.msg);
+            this.createDialog = false;
+            this.getCardList();
+          } else {
+            this.$message.error(res.data.msg);
+          }
+        });
       },
       subCard(){
-        this.createCard();
+        if(this.update){
+          this.updateCard();
+        }else{
+          this.createCard();
+        }
       },
       createCard(){
         let para = new FormData(this.$refs.form.$el);
@@ -139,7 +185,9 @@
         })
       },
       createCards(){
+        this.dialogTitle = "新建卡池";
         this.createDialog = true;
+        this.update = false;
       },
       getCardList() {
         let para = new FormData();
