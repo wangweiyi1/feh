@@ -13,6 +13,7 @@ import Count from '@/view/count/count'
 Vue.use(Router);
 
 export default new Router({
+  mode: 'history',
   routes: [
     // {
     //   path: '/Login',
