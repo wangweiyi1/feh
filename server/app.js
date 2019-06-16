@@ -28,6 +28,7 @@ app.use(express.static(path.resolve(__dirname, '../dist')));
 
 // 访问单页
 app.get('*', function (req, res) {
+  res.header('Access-Control-Allow-Origin', '*');
   let html = fs.readFileSync(path.resolve(__dirname, '../dist/index.html'), 'utf-8');
   res.send(html);
 });
